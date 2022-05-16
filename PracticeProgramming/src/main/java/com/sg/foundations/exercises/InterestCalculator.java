@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author faridasadpour
  */
 public class InterestCalculator {
-    public static void main(String[] args){
+    public void calculateInterest(){
         Scanner sc = new Scanner(System.in);
         int interestRate, years;
         float principal;

@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author faridasadpour
  */
 public class Factorizer {
-    public static void main(String[] args){
+    public void factorize(){
         Scanner sc = new Scanner(System.in);
         int number;
         System.out.println("Enter the number: ");

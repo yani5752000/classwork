@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author faridasadpour
  */
 public class RockPaperScissors {
-    public static void main(String[] args){
+    public void fight(){
         Scanner sc = new Scanner(System.in);
         Random rnd = new Random();
         
