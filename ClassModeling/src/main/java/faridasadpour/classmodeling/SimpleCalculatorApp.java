@@ -14,32 +14,32 @@ import java.util.Scanner;
 public class SimpleCalculatorApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        UserIO userIO = new UserIOImpl();
         String operation;
         int op1, op2;
         SimpleCalculator sCal = new SimpleCalculator();
         while(true){
-            System.out.println("Select operation: add, subtract, multiply, or divide.");
-            System.out.println("If you want to exit, type exit.");
-            operation = sc.nextLine();
+
+            operation = userIO.readString("Select operation: add, subtract, multiply, or divide.\n" + "If you want to exit, type exit.");
             if(operation.equals("exit")){
-                System.out.println("Thanks, bye.");
+                userIO.print("Thanks, bye.");
                 break;
             }
-            System.out.println("Enter the first operand: ");
-            op1 = Integer.parseInt(sc.nextLine());
-            System.out.println("Enter the first operand: ");
-            op2 = Integer.parseInt(sc.nextLine());
+           
+            op1 = userIO.readInt("Enter the first operand: ");
+          
+            op2 = userIO.readInt("Enter the second operand: ");
             
             switch(operation){
-                case "add": System.out.println("Result is " + sCal.add(op1, op2));
+                case "add": userIO.print("Result is " + sCal.add(op1, op2));
                 break;
-                case "subtract": System.out.println("Result is " + sCal.subtract(op1, op2));
+                case "subtract": userIO.print("Result is " + sCal.subtract(op1, op2));
                 break;
-                case "multiply": System.out.println("Result is " + sCal.multiply(op1, op2));
+                case "multiply": userIO.print("Result is " + sCal.multiply(op1, op2));
                 break;
-                case "divide": System.out.println("Result is " + sCal.divide(op1, op2));
+                case "divide": userIO.print("Result is " + sCal.divide(op1, op2));
                 break;
-                default: System.out.println("not a valid entry. try again.");
+                default: userIO.print("not a valid entry. try again.");
                 break;
             }
         }
