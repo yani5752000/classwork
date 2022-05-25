@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.classroster.dao;
+package com.sg.sqg.controller;
 
 /**
  *
  * @author faridasadpour
  */
-class PrintWriter {
+public class SQGController {
     
 }
