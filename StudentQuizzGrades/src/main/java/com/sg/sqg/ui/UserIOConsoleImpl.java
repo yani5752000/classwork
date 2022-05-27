@@ -5,10 +5,110 @@
  */
 package com.sg.sqg.ui;
 
+import java.util.Scanner;
+
 /**
  *
  * @author faridasadpour
  */
-public class UserIOConsoleImpl {
+public class UserIOConsoleImpl implements UserIO {
+    public void print(String message){
+        System.out.println(message);
+    }
     
+    public void print(int num){
+        System.out.println(num);
+    }
+    
+    public void print(double num){
+        System.out.println(num);
+    }
+
+    public String readString(String prompt){
+        Scanner sc = new Scanner(System.in);
+        String str;
+        System.out.println(prompt);
+        str = sc.nextLine();
+        return str;
+        
+    }
+
+    public int readInt(String prompt){
+        Scanner sc = new Scanner(System.in);
+        int num;
+        System.out.println(prompt);
+        num = Integer.parseInt(sc.nextLine());
+        return num;
+    }
+    public int readInt(String prompt, int min, int max){
+        Scanner sc = new Scanner(System.in);
+        int num;
+        
+        do{
+            System.out.println(prompt);
+            num = Integer.parseInt(sc.nextLine());
+        } while(num > max || num < min);
+        
+        return num;
+    }
+
+    public double readDouble(String prompt){
+        Scanner sc = new Scanner(System.in);
+        double num;
+        System.out.println(prompt);
+        num = Double.parseDouble(sc.nextLine());
+        return num;
+    }
+
+    public double readDouble(String prompt, double min, double max){
+        Scanner sc = new Scanner(System.in);
+        double num;
+        
+        do{
+            System.out.println(prompt);
+            num = Double.parseDouble(sc.nextLine());
+        } while(num > max || num < min);
+        
+        return num;
+    }
+
+    public float readFloat(String prompt){
+        Scanner sc = new Scanner(System.in);
+        float num;
+        System.out.println(prompt);
+        num = Float.parseFloat(sc.nextLine());
+        return num;
+    }
+
+    public float readFloat(String prompt, float min, float max){
+        Scanner sc = new Scanner(System.in);
+        float num;
+        
+        do{
+            System.out.println(prompt);
+            num = Float.parseFloat(sc.nextLine());
+        } while(num > max || num < min);
+        
+        return num;
+    }
+
+    public long readLong(String prompt){
+        Scanner sc = new Scanner(System.in);
+        long num;
+        System.out.println(prompt);
+        num = Long.parseLong(sc.nextLine());
+        return num;
+    }
+
+    public long readLong(String prompt, long min, long max){
+        Scanner sc = new Scanner(System.in);
+        long num;
+        
+        do{
+            System.out.println(prompt);
+            num = Long.parseLong(sc.nextLine());
+        } while(num > max || num < min);
+        
+        return num;
+    }
 }
