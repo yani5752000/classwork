@@ -52,7 +52,10 @@ public class AddressBookController {
                 case 5:
                     listAddresses();
                     break;
-                case 6:
+                    case 6:
+                editAddress();
+                    break;
+                case 7:
                     keepGoing = false;
                     break;
                 default:
@@ -102,6 +105,13 @@ public class AddressBookController {
         view.displayAddressesCountBanner();
         List<Address> addressList = dao.getAllAddresses();
         view.displayAddressesCount(addressList);
+    }
+    
+    private void editAddress() throws AddressBookDaoException {
+        view.displayEditAddressBanner();
+        Address newAddress = view.getEditAddressInfo();
+        dao.addAddress(newAddress.getLastName(), newAddress);
+        view.displayEditSuccessBanner();
     }
     
     private void unknownCommand() {

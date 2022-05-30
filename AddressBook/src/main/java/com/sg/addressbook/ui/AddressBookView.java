@@ -26,9 +26,10 @@ public class AddressBookView {
         io.print("3. View address");
         io.print("4. View the number of addresses");
         io.print("5. View all the addresses");
-        io.print("6. Exit");
+        io.print("6. Edit an address");
+        io.print("7. Exit");
 
-        return io.readInt("Please select from the above choices.", 1, 6);
+        return io.readInt("Please select from the above choices.", 1, 7);
     }
     
     public Address getNewAddressInfo() {
@@ -115,6 +116,32 @@ public class AddressBookView {
     public void displayAddressesCount(List<Address> addressList) {
         io.print(addressList.size());
         io.readString("Please hit enter to continue.");
+    }
+    
+    public Address getEditAddressInfo() {
+        String firstName = io.readString("Please enter First Name of the address you want to edit");
+        String lastName = io.readString("Please enter Last Name of the address you want to edit");
+        String streetAddress = io.readString("Please enter street address");
+        String city = io.readString("Please enter City");
+        String province = io.readString("Please enter Province");
+        String postalCode = io.readString("Please enter Postal Code");
+        Address currentAddress = new Address();
+        currentAddress.setFirstName(firstName);
+        currentAddress.setLastName(lastName);
+        currentAddress.setStreetAddress(streetAddress);
+        currentAddress.setCity(city);
+        currentAddress.setProvince(province);
+        currentAddress.setPostalCode(postalCode);
+        return currentAddress;
+    }
+    
+    public void displayEditAddressBanner() {
+        io.print("=== Edit Adddress ===");
+    }
+    
+    public void displayEditSuccessBanner() {
+        io.readString(
+                "Address successfully edited.  Please hit enter to continue");
     }
     
     public void displayExitBanner() {
