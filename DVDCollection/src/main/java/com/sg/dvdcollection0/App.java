@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.dvdcollection;
+package com.sg.dvdcollection0;
 
 import com.sg.dvdcollection.controller.DVDCollectionController;
 import com.sg.dvdcollection.dao.DVDCollectionDao;

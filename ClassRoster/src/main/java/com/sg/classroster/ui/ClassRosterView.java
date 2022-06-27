@@ -79,7 +79,7 @@ public void displayStudent(Student student) {
     }
         io.readString("Please hit enter to continue.");
     }
-    public void displayRemoveStudentBanner () {
+public void displayRemoveStudentBanner () {
     io.print("=== Remove Student ===");
 }
 

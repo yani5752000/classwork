@@ -8,7 +8,10 @@ package faridasadpour.helloworld;
 
 public class Hello {
     public static void main(String[] args) {
+        int a = 0;
+        int b  = 1;
         System.out.println("Hello, World!");
         System.out.println("Hello, World1!");
+        int c = 3;
     }
 }
