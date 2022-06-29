@@ -5,6 +5,8 @@
  */
 package com.sg.classroster.service;
 
+import com.sg.classroster.dao.ClassRosterAuditDao;
+import com.sg.classroster.dao.ClassRosterDao;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author faridasadpour
  */
 public class ClassRosterServiceLayerImplTest {
-    
+    private ClassRosterServiceLayer service;
+
     public ClassRosterServiceLayerImplTest() {
+        ClassRosterDao dao = new ClassRosterDaoStubImpl();
+        ClassRosterAuditDao auditDao = new ClassRosterAuditDaoStubImpl();
+
+        service = new ClassRosterServiceLayerImpl(dao, auditDao);
     }
+    
+    
     
     @BeforeAll
     public static void setUpClass() {
