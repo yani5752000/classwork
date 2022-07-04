@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.addressbook.dao;
+package com.sg.addressbook.service;
 
 /**
  *
  * @author faridasadpour
  */
-public class AddressBookDaoException extends Exception{
-    
-    public AddressBookDaoException(String message) {
+public class AddressBookDataValidationException extends Exception {
+    public AddressBookDataValidationException(String message) {
         super(message);
     }
-    
-    public AddressBookDaoException(String message, Throwable cause) {
+
+    public AddressBookDataValidationException(String message,
+            Throwable cause) {
         super(message, cause);
     }
-    
 }

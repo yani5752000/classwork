@@ -6,9 +6,12 @@
 package com.sg.addressbook.controller;
 
 import com.sg.addressbook.dao.AddressBookDao;
-import com.sg.addressbook.dao.AddressBookDaoException;
+import com.sg.addressbook.dao.AddressBookPersistenceException;
 import com.sg.addressbook.dao.AddressBookDaoFileImpl;
 import com.sg.addressbook.dto.Address;
+import com.sg.addressbook.service.AddressBookDataValidationException;
+import com.sg.addressbook.service.AddressBookDuplicateLastNameException;
+import com.sg.addressbook.service.AddressBookServiceLayer;
 import com.sg.addressbook.ui.AddressBookView;
 import com.sg.addressbook.ui.UserIO;
 import com.sg.addressbook.ui.UserIOConsoleImpl;
@@ -20,10 +23,10 @@ import java.util.List;
  */
 public class AddressBookController {
     private AddressBookView view;
-    private AddressBookDao dao;
+    private AddressBookServiceLayer service;
     
-    public AddressBookController(AddressBookDao dao, AddressBookView view) {
-        this.dao = dao;
+    public AddressBookController(AddressBookServiceLayer service, AddressBookView view) {
+        this.service = service;
         this.view = view;
     }
    
@@ -64,7 +67,7 @@ public class AddressBookController {
 
         }
         exitMessage();
-        } catch (AddressBookDaoException e) {
+        } catch (AddressBookPersistenceException e) {
             view.displayErrorMessage(e.getMessage());
         }
         
@@ -74,44 +77,67 @@ public class AddressBookController {
         return view.printMenuAndGetSelection();
     }
     
-    private void createAddress() throws AddressBookDaoException {
+    private void createAddress() throws AddressBookPersistenceException {
         view.displayCreateAddressBanner();
-        Address newAddress = view.getNewAddressInfo();
-        dao.addAddress(newAddress.getLastName(), newAddress);
-        view.displayCreateSuccessBanner();
+        boolean hasErrors = false;
+        
+        do {
+            Address newAddress = view.getNewAddressInfo();
+            try {
+                service.createAddress(newAddress);
+                view.displayCreateSuccessBanner();
+                hasErrors = false;
+            } catch (AddressBookDuplicateLastNameException | AddressBookDataValidationException e) {
+                hasErrors = true;
+                view.displayErrorMessage(e.getMessage());
+            }
+        } while (hasErrors);
+        
+        
     }
     
-    private void listAddresses() throws AddressBookDaoException {
+    private void listAddresses() throws AddressBookPersistenceException {
         view.displayDisplayAllBanner();
-        List<Address> addressList = dao.getAllAddresses();
+        List<Address> addressList = service.getAllAddresses();
         view.displayAddressList(addressList);
     }
     
-    private void viewAddress() throws AddressBookDaoException {
+    private void viewAddress() throws AddressBookPersistenceException {
         view.displayDisplayAddressBanner();
         String lastName = view.getLastNameChoice();
-        Address address = dao.getAddress(lastName);
+        Address address = service.getAddress(lastName);
         view.displayAddress(address);
     }
     
-    private void removeAddress() throws AddressBookDaoException {
+    private void removeAddress() throws AddressBookPersistenceException {
         view.displayRemoveAddressBanner();
         String lastName = view.getLastNameChoice();
-        Address removedAddress = dao.removeAddress(lastName);
+        Address removedAddress = service.removeAddress(lastName);
         view.displayRemoveResult(removedAddress);
     }
     
-    private void viewAddressesCount() throws AddressBookDaoException {
+    private void viewAddressesCount() throws AddressBookPersistenceException {
         view.displayAddressesCountBanner();
-        List<Address> addressList = dao.getAllAddresses();
+        List<Address> addressList = service.getAllAddresses();
         view.displayAddressesCount(addressList);
     }
     
-    private void editAddress() throws AddressBookDaoException {
+    private void editAddress() throws AddressBookPersistenceException {
         view.displayEditAddressBanner();
-        Address newAddress = view.getEditAddressInfo();
-        dao.addAddress(newAddress.getLastName(), newAddress);
-        view.displayEditSuccessBanner();
+        boolean hasErrors = false;
+        
+        do {
+            Address newAddress = view.getEditAddressInfo();
+            try {
+                service.editAddress(newAddress);
+                view.displayEditSuccessBanner();
+                hasErrors = false;
+            } catch (AddressBookDataValidationException e) {
+                hasErrors = true;
+                view.displayErrorMessage(e.getMessage());
+            }
+        } while (hasErrors);
+        
     }
     
     private void unknownCommand() {

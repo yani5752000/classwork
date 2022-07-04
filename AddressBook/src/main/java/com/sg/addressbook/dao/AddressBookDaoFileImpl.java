@@ -24,12 +24,20 @@ import java.util.Scanner;
  */
 public class AddressBookDaoFileImpl implements AddressBookDao {
     private Map<String, Address> addresses = new HashMap<>();
-    public static final String ADDRESS_FILE = "addresses.txt";
+    private final String ADDRESS_FILE;
     public static final String DELIMITER = "::";
+    
+    public AddressBookDaoFileImpl(){
+        ADDRESS_FILE = "addresses.txt";
+    }
+
+    public AddressBookDaoFileImpl(String addressesTextFile){
+        ADDRESS_FILE = addressesTextFile;
+    }
 
     @Override
     public Address addAddress(String lastName, Address address) 
-            throws AddressBookDaoException {
+            throws AddressBookPersistenceException {
         loadAddresses();
         Address prevAddress = addresses.put(lastName, address);
         writeAddresses();
@@ -37,28 +45,28 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
     }
     @Override
     public List<Address> getAllAddresses() 
-            throws AddressBookDaoException {
+            throws AddressBookPersistenceException {
         loadAddresses();
         return new ArrayList<Address>(addresses.values());
     }
 
     @Override
     public int getAddressesCount() 
-            throws AddressBookDaoException {
+            throws AddressBookPersistenceException {
         loadAddresses();
         return addresses.size();
     }
 
     @Override
     public Address getAddress(String lastName) 
-            throws AddressBookDaoException {
+            throws AddressBookPersistenceException {
         loadAddresses();
         return addresses.get(lastName);
     }
 
     @Override
     public Address removeAddress(String lastName) throws 
-            AddressBookDaoException {
+            AddressBookPersistenceException {
         loadAddresses();
         Address removedAddress = addresses.remove(lastName);
         writeAddresses();
@@ -85,7 +93,7 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
         return addressFromFile;
     }
     
-    private void loadAddresses() throws AddressBookDaoException {
+    private void loadAddresses() throws AddressBookPersistenceException {
         Scanner scanner;
 
         try {
@@ -94,7 +102,7 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
                     new BufferedReader(
                             new FileReader(ADDRESS_FILE)));
         } catch (FileNotFoundException e) {
-            throw new AddressBookDaoException(
+            throw new AddressBookPersistenceException(
                     "-_- Could not load roster data into memory.", e);
         }
         // currentLine holds the most recent line read from the file
@@ -135,14 +143,14 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
  * 
  * @throws ClassRosterDaoException if an error occurs writing to the file
  */
-private void writeAddresses() throws AddressBookDaoException {
+private void writeAddresses() throws AddressBookPersistenceException {
  
         PrintWriter out;
 
         try {
             out = new PrintWriter(new FileWriter(ADDRESS_FILE));
         } catch (IOException e) {
-            throw new AddressBookDaoException(
+            throw new AddressBookPersistenceException(
                     "Could not save address data.", e);
         }
 
