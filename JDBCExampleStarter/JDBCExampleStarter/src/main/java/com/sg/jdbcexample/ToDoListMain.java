@@ -7,6 +7,7 @@ package com.sg.jdbcexample;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -87,15 +88,84 @@ public class ToDoListMain {
     }
 
     private static void addItem() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Add Item");
+        System.out.println("What is the task?");
+        String task = sc.nextLine();
+        System.out.println("Any additional notes?");
+        String note = sc.nextLine();
+        
+        try (Connection conn = ds.getConnection()) {
+            String sql = "INSERT INTO todo(todo, note) VALUES(?,?)";
+            PreparedStatement pStmt = conn.prepareCall(sql);
+            pStmt.setString(1, task);
+            pStmt.setString(2, note);
+            pStmt.executeUpdate();
+            System.out.println("Add Complete");
+        }
     }
-
     private static void updateItem() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Update Item");
+        System.out.println("Which item do you want to update?");
+        String itemId = sc.nextLine();
+        try( Connection conn = ds.getConnection()) {
+            String sql = "SELECT * FROM todo WHERE id = ?";
+            PreparedStatement pStmt = conn.prepareCall(sql);
+            pStmt.setString(1, itemId);
+            ResultSet rs = pStmt.executeQuery();
+            rs.next();
+            ToDo td = new ToDo();
+            td.setId(rs.getInt("id"));
+            td.setTodo(rs.getString("todo"));
+            td.setNote(rs.getString("note"));
+            td.setFinished(rs.getBoolean("finished"));
+            System.out.println("1. ToDo - " + td.getTodo());
+            System.out.println("2. Note - " + td.getNote());
+            System.out.println("3. Finished - " + td.isFinished());
+            System.out.println("What would you like to change?");
+
+            String choice = sc.nextLine();
+            switch(choice) {
+                case "1":
+                    System.out.println("Enter new ToDo:");
+                    String todo = sc.nextLine();
+                    td.setTodo(todo);
+                    break;
+                case "2":
+                    System.out.println("Enter new Note:");
+                    String note = sc.nextLine();
+                    td.setNote(note);
+                    break;
+                case "3":
+                    System.out.println("Toggling Finished to " + !td.isFinished());
+                    td.setFinished(!td.isFinished());
+                    break;
+                default:
+                    System.out.println("No change made");
+                    return;
+            }
+            String updateSql = "UPDATE todo SET todo = ?, note = ?, finished = ? WHERE id = ?";
+            PreparedStatement updatePStmt = conn.prepareCall(updateSql);
+            updatePStmt.setString(1, td.getTodo());
+            updatePStmt.setString(2, td.getNote());
+            updatePStmt.setBoolean(3, td.isFinished());
+            updatePStmt.setInt(4, td.getId());
+            updatePStmt.executeUpdate();
+            System.out.println("Update Complete");
+        }
     }
 
     private static void removeItem() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Remove Item");
+        System.out.println("Which item would you like to remove?");
+        String itemId = sc.nextLine();
+        
+        try(Connection conn = ds.getConnection()) {
+            String sql = "DELETE FROM todo WHERE id = ?";
+            PreparedStatement pStmt = conn.prepareCall(sql);
+            pStmt.setString(1, itemId);
+            pStmt.executeUpdate();
+            System.out.println("Remove Complete");
+        }    
     }
     
      private static DataSource getDataSource() throws SQLException {
