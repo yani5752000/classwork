@@ -5,6 +5,7 @@ import Person from './Person';
 import Car from './Car';
 import AuthorInfo from './AuthorInfo';
 import LlamaHerd from './LlamaHerd';
+import ExampleComponent from './ExampleComponent';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <AuthorInfo author='Ada Lovelace' email='ada@lovelace.com'></AuthorInfo>
         <Car></Car>
         <LlamaHerd></LlamaHerd>
+        <ExampleComponent></ExampleComponent>
       </header>
     </div>
   );
