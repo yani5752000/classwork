@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
+import { render } from "react-dom";
+import Timer from './components/Timer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="flex flex-col justify-center">
+      <header className="flex  justify-center p-4 bg-blue-100 border-b-2 border-blue-200 shadow-md">
+        <h1 className="text-4xl ">The Timer</h1>
       </header>
+      <Timer></Timer>
     </div>
   );
 }
