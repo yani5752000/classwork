@@ -5,25 +5,22 @@ import Button from "react-bootstrap/Button";
 import {Container, Row, Col } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 
-let count;
+let count = 25;
 function Timer() {
+    const [countingOn, setCountingOn] = useState(false);
     const [chrono, setChrono] = useState(25);
+    //let keepGoing = false;
     useEffect(
         () => {
-            // EFFECT LOGIC
-            var timeout
-        
-            clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                decrease();
-                }, 1000);
-        
-            //EFFECT CLEAN UP
-            return function cleanUp() {
-                console.log("Cleaned up")
-                clearTimeout(timeout);
-                document.onmousemove = null;
-            };
+                // if(counting) {
+                //     count = chrono;
+                //     runTimer();
+                // }
+                //count = chrono;
+                if(countingOn){
+                    runTimer();
+                }
+                    
             }
     )
 
@@ -34,7 +31,10 @@ function Timer() {
 
     // Callback functions
     function runTimer() {
-        setTimeout(() => decrease(), 1000)
+        setTimeout(() => {
+            decrease();
+            //setCounting(!counting);
+        }, 1000)
         }
         
        
@@ -44,11 +44,11 @@ function Timer() {
             <p>{chrono}</p>
             <Row className="justify-content-md-center " xl={4} >
                     <Col>
-                        <Button variant="primary" onClick={() => {runTimer()}}>Start</Button>
+                        <Button variant="primary" onClick={() => {setCountingOn(true)}}>Start</Button>
                     </Col>
-                    {/* <Col>
-                        <Button variant="primary" onClick={() => {setColor("lightcoral")}}>Light Coral</Button>
-                    </Col> */}
+                    <Col>
+                        <Button variant="primary" onClick={() => {setCountingOn(false)}}>Stop</Button>
+                    </Col>
             </Row>
             
         </div>
