@@ -1,5 +1,7 @@
 // import logo from './logo.svg';
 // import './App.css';
+import { render } from "react-dom";
+import ProductHunt from "./components/ProductHunt";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           Learn React
         </a> */}
       </header>
+      <ProductHunt></ProductHunt>
     </div>
   );
 }

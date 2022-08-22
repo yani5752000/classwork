@@ -49,10 +49,10 @@ class Timer extends Component {
     render() {
         return (
             <div>
-                {this.state.chrono >= 0 && <h1>{ this.state.chrono }</h1>}
-                {this.state.chrono < 0 && <h1>0</h1>}
+                {this.state.chrono >= 0 && <h1>Timer: { this.state.chrono }</h1>}
+                {this.state.chrono < 0 && <h1>Timer: 0</h1>}
                 <h1>Count Downs: { this.state.countDowns }</h1>
-                <h1>Pauses { this.state.pauses }</h1>
+                <h1>Pauses: { this.state.pauses }</h1>
                 {/* <p>
                     It is a { this.state.color } { this.state.model } <br />
                     from { this.state.year }.
