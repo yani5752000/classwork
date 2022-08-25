@@ -1,0 +1,8 @@
+com\mycompany\ceilingfan\Direction.class
+com\mycompany\ceilingfan\FanController.class
+com\mycompany\ceilingfan\UserIO.class
+com\mycompany\ceilingfan\App.class
+com\mycompany\ceilingfan\Fan$1.class
+com\mycompany\ceilingfan\UserIOImpl.class
+com\mycompany\ceilingfan\Fan.class
+com\mycompany\ceilingfan\Speed.class
