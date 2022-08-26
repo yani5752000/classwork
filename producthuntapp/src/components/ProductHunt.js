@@ -9,6 +9,7 @@ function ProductHunt() {
     const [results, setResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
     const [initialData, setInitialData] = useState([]);
+    const [orderedByUpvotes, setOrderedByUpvotes] = useState(false);
     
    
 
@@ -46,44 +47,54 @@ function ProductHunt() {
             output.push(array[index]);
             array.splice(index, 1);
         }
+        console.log("hi22222", output);
         return output;
     }
-
-    const products1 = reorder(products);
-    
-    function filterSearchData(searchTerm) {
-        setHasSearched(true);
-        setSearch(searchTerm);
-        let filteredResults;
-        if (searchTerm === "") {
-            filteredResults = [];
-            setHasSearched(false);
-        } else {
-            filteredResults = initialData.filter((item) =>
-            item.title.S.includes(searchTerm.toLowerCase())
-            );
-        }
-        setResults(filteredResults);
+    const productsCopy = [];
+    for(const x of products) {
+        productsCopy.push(x);
     }
+    const products1 = reorder(productsCopy);
+
+    function findMaxIndex(arr) {
+        let max = 0;
+        
+        let maxIndex = 0;
+        
+        for(let i = 0; i < arr.length; i++) {
+            if(arr[i].upvotes > max) {
+                max = arr[i].upvotes;
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+    
+    function orderByUpvotes(arr) {
+        const output = [];
+        while(arr.length > 0) {
+            
+            
+            let maxIndex = findMaxIndex(arr);
+            console.log("findMax!!! ", maxIndex);
+            output.push(arr[maxIndex]);
+            console.log("OOOO ", output);
+            arr.splice(maxIndex, 1);
+        }
+        console.log("hi******", output);
+        return output;
+    }
+    
+    const productsCopy2 = [];
+    for(const x of products) {
+        productsCopy2.push(x);
+    }
+
+    const productsOrderedByUpvotes = orderByUpvotes(productsCopy2);
 
     return (
         <div className="flex flex-col items-center m-12">
-            <form className="w-1/2 flex justify-center">
-            <input
-                className="w-2/5 p-2 border-2 border-gray-200  "
-                type="search"
-                name="search"
-                id="search"
-                value={search}
-                onChange={(e) => filterSearchData(e.target.value)}
-            />
-            <button
-                className="border-2 m-2 border-black bg-gray-200 p-2"
-                type="submit"
-            >
-                Search
-            </button>
-            </form>
+           
             <section className="m-4">
             {/* { hasSearched
             ?
@@ -119,7 +130,23 @@ function ProductHunt() {
             </div>
             } */}
 
-            <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
+           { orderedByUpvotes &&
+            <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4">
+                {productsOrderedByUpvotes.map(function (item) {
+                return (
+                    <Card className="w-72 flex-1"  key={item.key}>
+                    <Card.Body >
+                        <Card.Title className="capitalize">{item.name}</Card.Title>
+                        <Card.Text>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</Card.Text>
+                        <Button variant="primary">More Details</Button>
+                    </Card.Body>
+                    </Card >
+                );
+                })}
+            </div>}
+                           
+            { !orderedByUpvotes &&
+                <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
                 {products1.map(function (item) {
                 return (
                     <Card className="w-72 flex-1"  key={item.key}>
@@ -131,8 +158,9 @@ function ProductHunt() {
                     </Card >
                 );
                 })}
-            </div>
+            </div> }
             </section>
+            <Button onClick={() => setOrderedByUpvotes(true)} variant="primary">Order by Upvotes</Button>
         </div>
     );
 }
