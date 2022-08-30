@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class ProductHunt extends Component {
@@ -89,58 +91,51 @@ class ProductHunt extends Component {
     render() {
         return (
             <div><p>hiiii</p>
-                
-                {/* <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
-                    {this.state.products.map(function (item) {
-                    return (
-                        // <card className="w-72 flex-1"  key={item.key}>
-                        // <div>
-                        //     <p className="capitalize">{item.name}</p>
-                        //     <p>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</p>
-                            
-                        // </div>
-                        // </card >
-                        <div class="card" key={item.key}>
-                            <div class="card-body">
-                                <p class="capitalize">{item.name}</p>
-                                <p>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</p>
-                            </div>
+                    {!this.props.orderedByUpvotes && 
+                         <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
+                         {this.reorder().map(function (item) {
+                         return (
+                             <Card className="w-72 flex-1"  key={item.key}>
+                             <Card.Body >
+                                 <Card.Title className="capitalize">{item.name}</Card.Title>
+                                 <Card.Text>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</Card.Text>
+                                 <Button variant="primary">More Details</Button>
+                             </Card.Body>
+                             </Card >
+                         );
+                         })}
+                     </div>
+                    }
+                    {this.props.orderedByUpvotes &&
+                         <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
+                            {this.props.orderByUpvotes().map(function (item) {
+                            return (
+                                <Card className="w-72 flex-1"  key={item.key}>
+                                <Card.Body >
+                                    <Card.Title className="capitalize">{item.name}</Card.Title>
+                                    <Card.Text>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</Card.Text>
+                                    <Button variant="primary">More Details</Button>
+                                </Card.Body>
+                                </Card >
+                            );
+                            })}
                         </div>
-                        
-                       
+                        // <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
+                        //     {this.props.orderByUpvotes().map(function (item) {
+                        //     return (
+                        //         <div class="card" key={item.key}>
+                        //             <div class="card-body">
+                        //                 <p class="capitalize">{item.name}</p>
+                        //                 <p>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</p>
+                        //             </div>
+                        //         </div>
+                        //     );
+                        //     })}
+                        // </div>
+                    }
                     
-                    );
-                    })}
-                </div> */}
-                {!this.state.orderedByUpvotes && 
-                    <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
-                        {this.reorder().map(function (item) {
-                        return (
-                            <div class="card" key={item.key}>
-                                <div class="card-body">
-                                    <p class="capitalize">{item.name}</p>
-                                    <p>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</p>
-                                </div>
-                            </div>
-                        );
-                        })}
-                    </div>
-                }
-                {this.state.orderedByUpvotes && 
-                    <div className="grid  md:grid-cols-2 lg:grid-cols-1 gap-4"  >
-                        {this.orderByUpvotes().map(function (item) {
-                        return (
-                            <div class="card" key={item.key}>
-                                <div class="card-body">
-                                    <p class="capitalize">{item.name}</p>
-                                    <p>Upvotes: {item.upvotes}-Downvotes: {item.downvotes}</p>
-                                </div>
-                            </div>
-                        );
-                        })}
-                    </div>
-                }
-                <button onClick={() => this.props.runOrderedByUpVotes()}>Order By Upvotes</button>
+                {/* <button onClick={() => this.props.runOrderedByUpVotes()}>Order By Upvotes</button> */}
+                <Button onClick={() => this.props.runOrderedByUpVotes()} variant="primary">Order By Upvotes</Button>
 
                 
             </div>

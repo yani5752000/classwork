@@ -89,7 +89,10 @@ class Parent extends Component {
    
     render() {
         return (
-            <ProductHunt runOrderedByUpVotes={this.runOrderedByUpVotes} 
+            <ProductHunt 
+            orderedByUpvotes={this.state.orderedByUpvotes}
+            orderByUpvotes={this.orderByUpvotes}
+            runOrderedByUpVotes={this.runOrderedByUpVotes} 
             products={this.state.products}></ProductHunt>
         );
     }
