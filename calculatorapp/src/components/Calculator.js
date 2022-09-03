@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from "react-bootstrap/Card";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -59,6 +60,7 @@ class Calculator extends Component {
             ],
             orderedByUpvotes: false,
             output: null,
+            value: null,
             firstOperandDone: false,
             secondOperandDone: false
 
@@ -82,6 +84,15 @@ class Calculator extends Component {
 
     getRandomInt = (max) => {
         return Math.floor(Math.random() * max);
+      }
+    
+    processButtonPress = () => {
+        this.setState({output: 10});
+    }
+
+    handleClick = (e)=>{
+        // console.log(e.target.value)
+        this.setState({output: e.target.value});
       }
 
     // findMaxIndex = (arr) => {
@@ -125,11 +136,13 @@ class Calculator extends Component {
     render() {
         return (
             <div className="flex flex-col items-center m-12"><p>Output: {this.state.output}</p>
+                 <Button onClick={() => this.processButtonPress()} variant="primary">Button</Button>
                 <section className="m-4">
-                <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
+                    <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
+                        <ButtonGroup onClick={this.handleClick}>
                             {this.state.buttons.map(function (item) {
                             return (
-                                <Button key={item.key} variant="primary">{item.name}</Button>
+                                <Button key={item.key} variant="primary" value={item.name}>{item.name}</Button>
                             //     <Card style={{width:"20%"}} className="w-72 flex-1"  key={item.key}>
                             //     <Card.Body >
                             //         <Card.Title className="capitalize">{item.name}</Card.Title>
@@ -139,7 +152,8 @@ class Calculator extends Component {
                             //     </Card >
                             );
                             })}
-                        </div>
+                        </ButtonGroup>
+                    </div>
                 </section>
                     
                     
