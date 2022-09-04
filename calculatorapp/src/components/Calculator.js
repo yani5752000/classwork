@@ -54,16 +54,30 @@ class Calculator extends Component {
                     name: "+",
                 },
                 {
+                    key: 11,
+                    name: "-",
+                },
+                {
+                    key: 11,
+                    name: "x",
+                },
+                {
+                    key: 11,
+                    name: "/",
+                },
+                {
                     key: 12,
                     name: "=",
                 },
             ],
             orderedByUpvotes: false,
-            output: null,
-            value: null,
+            output: "",
+            number1: 0,
+            number2: 0,
             firstOperandDone: false,
-            secondOperandDone: false
-
+            secondOperandDone: false,
+            operation: null,
+            inTheEnd: false
         };   
 
     }
@@ -86,8 +100,66 @@ class Calculator extends Component {
         return Math.floor(Math.random() * max);
       }
     
-    processButtonPress = () => {
-        this.setState({output: 10});
+    processButtonPress = (e) => {
+        this.setState({inTheEnd: false});
+        console.log("hi1");
+        // let operation;
+        // this.setState({output: e.target.value});
+        if(!this.state.firstOperandDone && !this.isOperator( e.target.value )){
+            console.log("hi2");
+            this.setState({number1: Number(e.target.value) + 10 * this.state.number1});
+            this.setState({output: this.state.output + e.target.value});
+            
+        } 
+        if(this.state.firstOperandDone && !this.isOperator( e.target.value ) && e.target.value !== "=") {
+            console.log("hi3");
+            this.setState({number2: Number(e.target.value) + 10 * this.state.number2});
+            this.setState({output: this.state.output + e.target.value});
+           
+        }
+
+        if(this.isOperator(e.target.value)) {
+            console.log("hi4");
+            this.setState({operation: e.target.value});
+            // console.log("operation: ", operation);
+            // console.log("type: ", typeof operation);
+            this.setState({firstOperandDone: true});
+            this.setState({output: this.state.output + e.target.value});
+        }
+
+        // console.log("1operaion ", operation);
+
+        if(e.target.value === "=") {
+            // console.log("2operaion ", operation);
+            console.log("hi5");
+            this.setState({secondOperandDone: true});
+            this.setState({result: this.operate(this.state.number1, this.state.number2, this.state.operation)})
+            this.setState({output: ""});
+            this.setState({firstOperandDone: false});
+            this.setState({secondOperandDone: false});
+            this.setState({number1: 0});
+            this.setState({number2: 0});
+            this.setState({inTheEnd: true});
+
+        }
+        
+    }
+
+    isOperator = (c) => {
+        return c === "+" || c === "-" || c === "x" || c === "/";
+    }
+
+    operate = (a, b, op) => {
+        console.log("hi6");
+        console.log("OP ", op);
+        console.log("ty: ", typeof op);
+        switch(op) {
+            case '+': console.log("hi7"); 
+                        return a + b;
+            case '-': return a - b;
+            case 'x': return a * b;
+            case '/': return a / b;
+        }
     }
 
     handleClick = (e)=>{
@@ -135,11 +207,14 @@ class Calculator extends Component {
    
     render() {
         return (
-            <div className="flex flex-col items-center m-12"><p>Output: {this.state.output}</p>
+            <div className="flex flex-col items-center m-12">
+                {this.state.inTheEnd && <p>Output: {this.state.result}</p>}
+                {!this.state.inTheEnd && <p>Output: {this.state.output}</p>}
+                
                  <Button onClick={() => this.processButtonPress()} variant="primary">Button</Button>
                 <section className="m-4">
                     <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
-                        <ButtonGroup onClick={this.handleClick}>
+                        <ButtonGroup onClick={this.processButtonPress}>
                             {this.state.buttons.map(function (item) {
                             return (
                                 <Button key={item.key} variant="primary" value={item.name}>{item.name}</Button>
