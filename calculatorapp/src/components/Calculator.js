@@ -69,6 +69,10 @@ class Calculator extends Component {
                     key: 12,
                     name: "=",
                 },
+                {
+                    key: 12,
+                    name: "C",
+                }
             ],
             orderedByUpvotes: false,
             output: "",
@@ -102,6 +106,15 @@ class Calculator extends Component {
     
     processButtonPress = (e) => {
         this.setState({inTheEnd: false});
+        if(e.target.value === "C") {
+            this.setState({output: ""});
+            this.setState({firstOperandDone: false});
+            this.setState({secondOperandDone: false,
+                number1: 0,
+                number2: 0
+            });
+            return;
+        }
         console.log("hi1");
         // let operation;
         // this.setState({output: e.target.value});
@@ -211,13 +224,13 @@ class Calculator extends Component {
                 {this.state.inTheEnd && <p>Output: {this.state.result}</p>}
                 {!this.state.inTheEnd && <p>Output: {this.state.output}</p>}
                 
-                 <Button onClick={() => this.processButtonPress()} variant="primary">Button</Button>
                 <section className="m-4">
-                    <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
-                        <ButtonGroup onClick={this.processButtonPress}>
+                    
+                    <ButtonGroup onClick={this.processButtonPress} className = "grid  md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4"  >
                             {this.state.buttons.map(function (item) {
                             return (
-                                <Button key={item.key} variant="primary" value={item.name}>{item.name}</Button>
+                                <Button className="w-72 flex-1" key={item.key} variant="primary" value={item.name}>{item.name}</Button>
                             //     <Card style={{width:"20%"}} className="w-72 flex-1"  key={item.key}>
                             //     <Card.Body >
                             //         <Card.Title className="capitalize">{item.name}</Card.Title>
@@ -227,8 +240,9 @@ class Calculator extends Component {
                             //     </Card >
                             );
                             })}
-                        </ButtonGroup>
-                    </div>
+                        </div>
+                    </ButtonGroup>
+                    
                 </section>
                     
                     
