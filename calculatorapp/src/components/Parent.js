@@ -73,6 +73,7 @@ class Parent extends Component {
                 }
             ],
             output: "",
+            result: null,
             number1: 0,
             number2: 0,
             firstOperandDone: false,
@@ -145,7 +146,18 @@ class Parent extends Component {
    
     render() {
         return (
-           <Calculator></Calculator>
+           <Calculator 
+           buttons={this.state.buttons} 
+           output={this.state.output} 
+           result={this.state.result}
+           number1={this.state.number1}
+           number2={this.state.number2}
+           firstOperandDone={this.state.firstOperandDone}
+           secondOperandDone={this.state.secondOperandDone}
+           operation={this.state.operation}
+           inTheEnd
+           >
+           </Calculator>
         );
     }
 }
