@@ -85,6 +85,7 @@ class Parent extends Component {
     }
 
     processButtonPress = (e) => {
+        console.log("Hiiii");
         this.setState({inTheEnd: false});
         if(e.target.value === "C") {
             this.setState({output: ""});
@@ -147,15 +148,11 @@ class Parent extends Component {
     render() {
         return (
            <Calculator 
+           processButtonPress={this.processButtonPress}
            buttons={this.state.buttons} 
            output={this.state.output} 
            result={this.state.result}
-           number1={this.state.number1}
-           number2={this.state.number2}
-           firstOperandDone={this.state.firstOperandDone}
-           secondOperandDone={this.state.secondOperandDone}
-           operation={this.state.operation}
-           inTheEnd
+           inTheEnd={this.state.inTheEnd}
            >
            </Calculator>
         );

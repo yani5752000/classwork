@@ -149,13 +149,13 @@ class Calculator extends Component {
     render() {
         return (
             <div className="flex flex-col items-center m-12">
-                {this.state.inTheEnd && <p>Output: {this.state.result}</p>}
-                {!this.state.inTheEnd && <p>Output: {this.state.output}</p>}
+                {this.props.inTheEnd && <p>Output: {this.props.result}</p>}
+                {!this.props.inTheEnd && <p>Output: {this.props.output}</p>}
                 
                 <section className="m-4">
                     
-                    <ButtonGroup onClick={this.processButtonPress} >
-                            {this.state.buttons.map(function (item) {
+                    <ButtonGroup onClick={this.props.processButtonPress} >
+                            {this.props.buttons.map(function (item) {
                             return (
                                 <Button className="w-72 flex-1" key={item.key} variant="primary" value={item.name}>{item.name}</Button>
                             );
