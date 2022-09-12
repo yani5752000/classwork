@@ -154,7 +154,7 @@ class Calculator extends Component {
                 
                 <section className="m-4">
                     
-                    <ButtonGroup onClick={this.props.processButtonPress} >
+                    <ButtonGroup onClick={(e) => this.props.processButtonPress(e)} >
                             {this.props.buttons.map(function (item) {
                             return (
                                 <Button className="w-72 flex-1" key={item.key} variant="primary" value={item.name}>{item.name}</Button>
