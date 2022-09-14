@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table, Button } from 'react-bootstrap'
 
 const ContactTableHeader = () => {
@@ -16,7 +16,8 @@ const ContactTableHeader = () => {
     );
 }
 
-const ContactTableRow = ({ contact }) => {
+const ContactTableRow = ({ contact , toggleEdit, toggleDelete }) => {
+    console.log(contact)
     return (
         <tr>
             <td>{contact.contactId}</td>
@@ -25,48 +26,48 @@ const ContactTableRow = ({ contact }) => {
             <td>{contact.company}</td>
             <td>{contact.phone}</td>
             <td>{contact.email}</td>
-            <td><Button>Edit</Button></td>
-            <td><Button>Delete</Button></td>
+            <td><Button onClick={toggleEdit} value={contact.contactId}>Edit</Button></td>
+            <td><Button onClick={toggleDelete} value={contact.contactId} >Delete</Button></td>
         </tr>
     );
 }
 
-class ContactTable extends Component {
+class ContactTable extends React.Component {
 
-    // this static property will initialize a prop with data
-    // if it hasn't been provided by the parent component
     static defaultProps = {
         contacts: [
             {
                 "contactId": 1,
-                "firstName": "Still Fake",
+                "firstName": "Fake",
                 "lastName": "Contact",
-                "company": "Unknown Inc.",
+                "company": "Unknown Industries",
                 "phone": "000-0000",
-                "email": "stillfake@unknown.io"
+                "email": "fContact@unknowninc.io"
             },
             {
                 "contactId": 2,
-                "firstName": "So Mysterious",
+                "firstName": "Mystery",
                 "lastName": "Contact",
-                "company": "Unknown Inc.",
+                "company": "Unknown Industries",
                 "phone": "000-0000",
-                "email": "somysterious@unknown.io"
+                "email": "mContact@unknowninc.io"
             }
         ]
     }
 
     render() {
-        // Here is a debug method to monitor incoming contact data
-        console.log("Rendering Contact Table:")
-        console.log(this.props.contacts)
-        return (<Table striped bordered responsive>
+        return (<Table striped bordered hover>
             <thead>
                 <ContactTableHeader/>
             </thead>
             <tbody>
                 {this.props.contacts.map((contact, i) => {
-                    return <ContactTableRow contact={contact} key={i} />
+                    return <ContactTableRow 
+                    contact={contact} 
+                    key={i} 
+                    toggleEdit={this.props.handleEdit}
+                    toggleDelete={this.props.handleDelete}
+                    />
                 })}
             </tbody>
         </Table>)
