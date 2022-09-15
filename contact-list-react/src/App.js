@@ -34,6 +34,20 @@ import React from 'react';
         "company": "Heart of Gold",
         "phone": "000-0000",
         "email": "prez@badnews.us"
+      },
+      addFormErrors : {
+        firstName : '',
+        lastName : '',
+        company : '',
+        phone : '',
+        email : ''
+      },
+      editFormErrors : {
+        firstName : '',
+        lastName : '',
+        company : '',
+        phone : '',
+        email : ''
       }
     }
 
@@ -69,28 +83,35 @@ import React from 'react';
     }
 
     handleEditFormSubmit = (event) => {
-        if (event) event.preventDefault();
-        let contactId = event.target.value;
-        console.log(`Submitting edit for contact id ${contactId}`)
-        console.log(this.state.editContactData)
-
-        fetch(SERVICE_URL+'/contact/'+contactId, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.editContactData),
-        })
+      if (event) event.preventDefault();
+      let contactId = event.target.value;
+      console.log(`Submitting edit for contact id ${contactId}`)
+      console.log(this.state.editContactData)
+  
+      let validationErrors = this.validateContact(this.state.editContactData)
+      if(!validationErrors.isValid){
+        console.log("Edited contact is invalid. Reporting errors.")
+        this.setState({editFormErrors : validationErrors})
+        return
+      }
+  
+      fetch(SERVICE_URL + '/contact/' + contactId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.state.editContactData),
+      })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
-            this.setState({ showEditModal : false })
-            this.loadContactData();
+          console.log('Success:', data);
+          this.setState({ showEditModal: false, editFormErrors : validationErrors})
+          this.loadContactData();
         })
         .catch((error) => {
-            console.error('Error:', error);
+          console.error('Error:', error);
         });
-
+  
     }
 
     handleEditModalClose = (event) => {
@@ -136,10 +157,65 @@ import React from 'react';
       }
     }
 
+    validateContact = (contact) => {
+      let errors = {
+        firstName : "",
+        lastName: "",
+        company: "",
+        phone: "",
+        email:"",
+        isValid: true
+      }
+  
+      let isInvalid = false;
+  
+      if(!contact.firstName){
+        errors.firstName = "Please enter a first name."
+        errors.isValid = false;
+      }
+  
+      if(!contact.lastName){
+        errors.lastName = "Please enter a last name."
+        errors.isValid = false;
+      }
+  
+      if(!contact.company){
+        errors.company = "Please enter the company name."
+        errors.isValid = false;
+      }
+  
+      if(!contact.phone && !contact.email){
+        errors.phone = "Please enter a phone or email contact (or both)."
+        errors.email = "Please enter a phone or email contact (or both)."
+        errors.isValid = false;
+      }
+  
+      let phonePattern = "[0-9]{3}-[0-9]{4}";
+      if(contact.phone && !contact.phone.match(phonePattern)){
+        errors.phone = "Please match the expected pattern."
+        errors.isValid = false;
+      }
+  
+      let emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+      if(contact.email && !contact.email.match(emailPattern)){
+        errors.email = "Please match the expected pattern."
+        errors.isValid = false;
+      }
+  
+      return errors;
+    }
+  
     handleAddFormSubmit = (event) => {
       console.log("Adding contact!")
       if (event) event.preventDefault();
-
+  
+      let validationErrors = this.validateContact(this.state.newContactData)
+      if(!validationErrors.isValid){
+        console.log("New contact is invalid. Reporting errors.", validationErrors)
+        this.setState({addFormErrors : validationErrors})
+        return
+      }
+  
       fetch(SERVICE_URL + '/contact/', {
         method: 'POST',
         headers: {
@@ -150,12 +226,13 @@ import React from 'react';
         .then(response => response.json())
         .then(data => {
           console.log('Add Contact - Success:', data);
-          this.setState({ newContactData: { firstName: '', lastName: '', company: '', phone: '', email: '' } })
+          this.setState({
+            newContactData: { firstName: '', lastName: '', company: '', phone: '', email: '' },
+            addFormErrors : validationErrors })
           this.loadContactData();
         })
         .catch((error) => {
-          console.log('Add Contact - Error:')
-          console.log(error)
+          console.log('Add Contact - Error:', error);
         });
     }
 
@@ -198,6 +275,7 @@ import React from 'react';
                 handleSubmit={this.handleAddFormSubmit}
                 handleChange={this.handleAddFormChange}
                 contactData={this.state.newContactData}
+                contactErrors={this.state.addFormErrors}
               />
             </Col>
           </Row>
@@ -206,7 +284,8 @@ import React from 'react';
             handleSubmit={this.handleEditFormSubmit}
             handleChange={this.handleEditFormChange}
             handleClose={this.handleEditModalClose}
-            contactData={this.state.editContactData} />
+            contactData={this.state.editContactData}
+            contactErrors={this.state.editFormErrors} />
         </Container>
       );
     }
