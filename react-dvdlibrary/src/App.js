@@ -16,6 +16,7 @@ class App extends React.Component {
 
   state = {
     loading: false,
+    showCreateModal: false,
     dvdData: [
       {
         "title": "hi0",
@@ -23,10 +24,45 @@ class App extends React.Component {
         "director": "Janesen",
         "rating": "PG-10"
       }],
+      newDvdData: {
+        "title": "",
+        "releaseYear": "",
+        "director": "",
+        "rating": "",
+        "notes": ""
+      },
       newSearchParameters: {
         searchTerm: '',
         searchCategory: ''
       }
+  }
+
+  handleCreateFormChange = (event) => {
+    // The event triggering this function should be an input's onChange event
+    // We need to grab the input's name & value so we can associate it with the
+    // newDvdData within the App's state.
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+    let dvdInfo = this.state.newDvdData;
+
+    console.log(`Updating new dvd data: ${inputName} : ${inputValue}`)
+
+    if (dvdInfo.hasOwnProperty(inputName)) {
+      dvdInfo[inputName] = inputValue;
+      this.setState({ newDvdData: dvdInfo })
+    }
+  }
+
+  handleCreateModalClose = (event) => {
+      console.log("Closing Create Modal")
+      this.setState({ showCreateModal : false})
+  }
+
+  handleCreateModalOpen = (event) => {
+      console.log("Opening Create Modal")
+      if (event) event.preventDefault();
+      console.log("Creating new DVD record")
+      this.setState({ showCreateModal : true})
   }
 
   componentDidMount() {
@@ -95,7 +131,7 @@ class App extends React.Component {
       <Container fluid>
         <Row>
           <Col sm={4}>
-            <CreateButton />
+            <CreateButton handleCreate={this.handleCreateModalOpen} />
           </Col>
           <Col sm={8}>
             <SerachForm 
@@ -112,7 +148,12 @@ class App extends React.Component {
           </Col>
         </Row>
         <hr />
-        {/* <CreateModal /> */}
+        <CreateModal 
+        handleChange={this.handleCreateFormChange}
+        show={this.state.showCreateModal}
+        handleClose={this.handleCreateModalClose}
+        dvdData={this.state.newDvdData} 
+        />
         {/* <EditModal /> */}
         {/* <DeleteModal /> */}
       </Container>

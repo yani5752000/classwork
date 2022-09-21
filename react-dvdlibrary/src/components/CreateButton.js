@@ -1,7 +1,12 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
-function CreateButton (){
-  return <h1>Create Button</h1>
+class CreateButton extends React.Component {
+  render() {
+    return (
+      <Button onClick={this.props.handleCreate}>Create</Button>
+    )
+  }
 }
-
 export default CreateButton
+  
