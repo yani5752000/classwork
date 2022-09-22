@@ -3,7 +3,7 @@ import { Form, Button, Modal } from 'react-bootstrap'
 
 class ContactModal extends React.Component {
   render() {
-    let { dvdData, show, handleClose, handleChange } = this.props;
+    let { dvdData, show, handleClose, handleChange, handleSubmit } = this.props;
     return (
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Dialog>
@@ -12,7 +12,7 @@ class ContactModal extends React.Component {
           </Modal.Header> */}
 
           <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="dvdTitle">
                     <Form.Label>Title:</Form.Label>
                     <Form.Control type="text" placeholder="Title" name="title"
@@ -29,9 +29,17 @@ class ContactModal extends React.Component {
                     value={dvdData.director} onChange={handleChange}/>
                 </Form.Group>
                 <Form.Group controlId="dvdRating">
-                    <Form.Label>Phone Number:</Form.Label>
-                    <Form.Control type="text" placeholder="Rating" name="rating"
-                    value={dvdData.rating} onChange={handleChange}/>
+                    <Form.Label>Rating:</Form.Label>
+                    <Form.Select aria-label="Default select example"
+                    name="rating"
+                    onChange={handleChange}>
+                      <option>Choose Rating</option>
+                      <option value="P">P</option>
+                      <option value="G">G</option>
+                      <option value="R">R</option>
+                      <option value="PG">PG</option>
+                      <option value="PG-13">PG-13</option>
+                    </Form.Select>
                 </Form.Group>
                 <Form.Group controlId="dvdNotes">
                     <Form.Label>Notes:</Form.Label>

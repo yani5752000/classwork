@@ -19,17 +19,20 @@ class App extends React.Component {
     showCreateModal: false,
     dvdData: [
       {
+        "dvdId": 1,
         "title": "hi0",
         "releaseYear": "2010",
         "director": "Janesen",
-        "rating": "PG-10"
+        "rating": "PG-10",
+        "notes": "notes1"
       }],
       newDvdData: {
+        "dvdId": 2,
         "title": "",
         "releaseYear": "",
         "director": "",
         "rating": "",
-        "notes": ""
+        "notes": "notes2"
       },
       newSearchParameters: {
         searchTerm: '',
@@ -53,6 +56,30 @@ class App extends React.Component {
     }
   }
 
+  handleCreateFormSubmit = (event) => {
+    console.log("Adding dvd!")
+    if (event) event.preventDefault();
+
+    fetch(SERVICE_URL + '/dvd/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.newDvdData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Add DVD - Success:', data);
+        this.setState({ newDvdtData: { title: '', releaseYear: '', director: '', rating: '', notes: '' },
+       showCreateModal: false })
+        this.loadDvdData();
+      })
+      .catch((error) => {
+        console.log('Add Contact - Error:')
+        console.log(error)
+      });
+  }
+
   handleCreateModalClose = (event) => {
       console.log("Closing Create Modal")
       this.setState({ showCreateModal : false})
@@ -69,11 +96,7 @@ class App extends React.Component {
     console.log("App is now mounted.")
     this.setState({ loading: true })
     console.log("Loading dvd data")
-    fetch(SERVICE_URL + "/dvds")
-      .then(data => data.json())
-      .then(data => this.setState(
-        { dvdData: data, loading: false }
-      ))
+    this.loadDvdData();
   }
 
   handleSearchTermChange = (event) => {
@@ -112,18 +135,37 @@ class App extends React.Component {
     console.log("processing the search!")
     if (event) event.preventDefault();
 
-    this.loadDvdData(this.state.newSearchParameters);
+    this.loadSearchedDvdData(this.state.newSearchParameters);
   }
 
-  loadDvdData(parameters) {
+  loadSearchedDvdData(parameters) {
     this.setState({ loading: true })
     console.log("Loading dvd data based on search category: " + parameters.searchCategory 
     + " and search term: " + parameters.searchTerm )
     fetch(SERVICE_URL + "/dvds")
       .then(data => data.json())
       .then(data => this.setState(
-        { dvdData: data.filter(dvd => {return dvd[parameters.searchCategory].includes(parameters.searchTerm)}), loading: false }
+        { dvdData: data.filter(dvd => {return this.isMatch(dvd, parameters)}), loading: false }
       ))
+  }
+
+  isMatch(dvd, parameters) {
+    if(typeof dvd[parameters.searchCategory] === "number") {
+      return dvd[parameters.searchCategory] == parameters.searchTerm;
+    } else {
+      return dvd[parameters.searchCategory].includes(parameters.searchTerm);
+    }
+  }
+
+  loadDvdData() {
+    this.setState({ loading: true })
+    console.log("Loading dvd data:");
+    fetch(SERVICE_URL + "/dvds")
+      .then(data => data.json())
+      .then(data => {
+        this.setState({ dvdData: data, loading: false });
+      }
+      )
   }
 
   render() {
@@ -149,6 +191,7 @@ class App extends React.Component {
         </Row>
         <hr />
         <CreateModal 
+        handleSubmit={this.handleCreateFormSubmit}
         handleChange={this.handleCreateFormChange}
         show={this.state.showCreateModal}
         handleClose={this.handleCreateModalClose}

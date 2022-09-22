@@ -16,7 +16,7 @@ class SearchForm extends React.Component {
                 </Col>
                 <Col sm={4}>
                   <Form.Select aria-label="Default select example"
-                  name={"searchCategory"}
+                  name="searchCategory"
                   onChange={handleSearchCategoryChange}>
                     <option>Search Category</option>
                     <option value="title">Title</option>
@@ -24,18 +24,6 @@ class SearchForm extends React.Component {
                     <option value="director">Director Name</option>
                     <option value="rating">Rating</option>
                   </Form.Select>
-                  {/* <Form.Control
-                    as="select"
-                    value={type}
-                    onChange={e => {
-                      console.log("e.target.value", e.target.value);
-                      setType(e.target.value);
-                    }}
-                  >
-                    <option value="DICTUM">Dictamen</option>
-                    <option value="CONSTANCY">Constancia</option>
-                    <option value="COMPLEMENT">Complemento</option>
-                  </Form.Control> */}
                 </Col>
                 <Col sm={6}>
                   <Form.Control type="text" placeholder="Search Term" name="searchTerm"
