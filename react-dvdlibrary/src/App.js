@@ -17,9 +17,10 @@ class App extends React.Component {
   state = {
     loading: false,
     showCreateModal: false,
+    showEditModal: false,
     dvdData: [
       {
-        "dvdId": 1,
+        "id": 1,
         "title": "hi0",
         "releaseYear": "2010",
         "director": "Janesen",
@@ -27,12 +28,19 @@ class App extends React.Component {
         "notes": "notes1"
       }],
       newDvdData: {
-        "dvdId": 2,
         "title": "",
         "releaseYear": "",
         "director": "",
         "rating": "",
         "notes": "notes2"
+      },
+      editDvdData: {
+        "id": 4,
+        "title": "hi0ed",
+        "releaseYear": "2011",
+        "director": "Janeseed",
+        "rating": "PG-10",
+        "notes": "notes1ed"
       },
       newSearchParameters: {
         searchTerm: '',
@@ -40,7 +48,108 @@ class App extends React.Component {
       }
   }
 
-  handleCreateFormChange = (event) => {
+  handleEditModalClose = (event) => {
+    console.log("Closing Edit Modal")
+    this.setState({ showEditModal : false})
+}
+
+handleEditModalOpen = (event) => {
+    console.log("Opening Edit Modal")
+    if (event) event.preventDefault();
+    let dvdId = event.target.value;
+    console.log(`Editing dvd id ${dvdId}`);
+    // submit a GET request to the /dvd/{dvdId} endpoint
+      // the response should come back with the associated dvd's JSON
+      fetch(SERVICE_URL+'/dvd/'+dvdId)
+      .then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+          this.setState(
+            { editDvdData : data , showEditModal : true}
+          )
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+}
+
+handleEditFormChange = (event) => {
+
+  let inputName = event.target.name;
+  let inputValue = event.target.value;
+  let dvdInfo = this.state.editDvdData;
+  console.log("Changer: ", dvdInfo);
+
+  console.log(`Something changed in ${inputName} : ${inputValue}`)
+
+  if(dvdInfo.hasOwnProperty(inputName)){
+      dvdInfo[inputName] = inputValue;
+      this.setState({ editDvdData : dvdInfo })
+  }
+
+}
+
+// handleEditFormSubmit = (event) => {
+//   if (event) event.preventDefault();
+//   let dvdId = event.target.value;
+//   console.log(`Submitting edit for dvd id ${dvdId}`)
+//   console.log(this.state.editDvdData)
+
+//   fetch(SERVICE_URL+'/dvd/'+dvdId, {
+//       method: 'PUT',
+//       headers: {
+//           'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(this.state.editDvdData),
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       console.log('Success:', data);
+//       this.setState({ showEditModal : false })
+//       this.loadContactData();
+//   })
+//   .catch((error) => {
+//       console.error('Error:', error);
+//   });
+
+// }
+
+handleEditFormSubmit = (event) => {
+  if (event) event.preventDefault();
+  let dvdId = event.target.value;
+  console.log(`Submitting edit for dvd id ${dvdId}`)
+  // let dvdInfo = this.state.editDvdData;
+  // dvdInfo.id = dvdId;
+  // this.setState({ editDvdData : dvdInfo })
+  console.log(this.state.editDvdData)
+
+  // let validationErrors = this.validateContact(this.state.editContactData)
+  // if(!validationErrors.isValid){
+  //   console.log("Edited contact is invalid. Reporting errors.")
+  //   this.setState({editFormErrors : validationErrors})
+  //   return
+  // }
+
+  fetch(SERVICE_URL + '/dvd/' + dvdId, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(this.state.editDvdData),
+  })
+    .then(response => console.log("respppp: ", response))
+    .then(data => {
+      console.log('Success:', data);
+      this.setState({ showEditModal: false})
+      this.loadDvdData();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+}
+
+handleCreateFormChange = (event) => {
     // The event triggering this function should be an input's onChange event
     // We need to grab the input's name & value so we can associate it with the
     // newDvdData within the App's state.
@@ -164,6 +273,7 @@ class App extends React.Component {
       .then(data => data.json())
       .then(data => {
         this.setState({ dvdData: data, loading: false });
+        console.log("dvdData: ", this.state.dvdData);
       }
       )
   }
@@ -186,7 +296,9 @@ class App extends React.Component {
         <hr />
         <Row>
           <Col className="text-center">
-            <DVDTable dvds={this.state.dvdData} />
+            <DVDTable 
+            handleEdit={this.handleEditModalOpen}
+            dvds={this.state.dvdData} />
           </Col>
         </Row>
         <hr />
@@ -197,7 +309,12 @@ class App extends React.Component {
         handleClose={this.handleCreateModalClose}
         dvdData={this.state.newDvdData} 
         />
-        {/* <EditModal /> */}
+        <EditModal
+         handleSubmit={this.handleEditFormSubmit}
+         handleChange={this.handleEditFormChange}
+         show={this.state.showEditModal}
+         handleClose={this.handleEditModalClose}
+         dvdData={this.state.editDvdData} />
         {/* <DeleteModal /> */}
       </Container>
     );

@@ -14,14 +14,14 @@ const DVDTableHeader = () => {
   );
 }
 
-const DVDTableRow = ({ dvd }) => {
+const DVDTableRow = ({ dvd, toggleEdit }) => {
   return (
       <tr>
           <td>{dvd.title}</td>
           <td>{dvd.releaseYear}</td>
           <td>{dvd.director}</td>
           <td>{dvd.rating}</td>
-          <td><Button>Edit</Button></td>
+          <td><Button onClick={toggleEdit} value={dvd.id}>Edit</Button></td>
           <td><Button>Delete</Button></td>
       </tr>
   );
@@ -55,7 +55,7 @@ class DVDTable extends React.Component {
           </thead>
           <tbody>
               {this.props.dvds.map((dvd, i) => {
-                  return <DVDTableRow dvd={dvd} key={i} />
+                  return <DVDTableRow dvd={dvd} key={i} toggleEdit={this.props.handleEdit}/>
               })}
           </tbody>
       </Table>)
