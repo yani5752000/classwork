@@ -31,6 +31,19 @@ class EditModal extends React.Component {
                   onChange={handleChange}
                   value={dvdData.director} />
               </Form.Group>
+              <Form.Group controlId="dvdRating">
+                    <Form.Label>Rating:</Form.Label>
+                    <Form.Select aria-label="Default select example"
+                    name="rating"
+                    onChange={handleChange}
+                    value={dvdData.rating}>
+                      <option value="P">P</option>
+                      <option value="G">G</option>
+                      <option value="R">R</option>
+                      <option value="PG">PG</option>
+                      <option value="PG-13">PG-13</option>
+                    </Form.Select>
+                </Form.Group>
               <Form.Group controlId="dvdNotes">
                 <Form.Label>Notes:</Form.Label>
                 <Form.Control as="textarea" rows={3} placeholder="Notes" name="notes"

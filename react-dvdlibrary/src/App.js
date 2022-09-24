@@ -4,8 +4,8 @@ import DVDTable from './components/DVDTable';
 import SerachForm from './components/SerachForm';
 import CreateButton from './components/CreateButton';
 import CreateModal from './components/CreateModal';
-import DeleteModal from './components/DeleteModal';
 import EditModal from './components/EditModal';
+import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 
 import { Container, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +18,7 @@ class App extends React.Component {
     loading: false,
     showCreateModal: false,
     showEditModal: false,
+    showDeleteConfirmationModal: false,
     dvdData: [
       {
         "id": 1,
@@ -42,11 +43,42 @@ class App extends React.Component {
         "rating": "PG-10",
         "notes": "notes1ed"
       },
+      toBeDeletedDvdId: "",
       newSearchParameters: {
         searchTerm: '',
         searchCategory: ''
       }
   }
+
+  handleDeleteDvd = (event) => {
+    if (event) event.preventDefault();
+    let dvdId = this.state.toBeDeletedDvdId;
+    console.log(`Submitting delete for dvd id ${dvdId}`)
+
+    fetch(SERVICE_URL+'/dvd/'+dvdId, {
+        method: 'DELETE',
+    })
+    .then(data => {
+        this.setState({toBeDeletedDvdId: "", showDeleteConfirmationModal: false});
+        this.loadDvdData();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+handleDeleteConfirmationModalClose = (event) => {
+  console.log("Closing Delete Confirmation Modal")
+  this.setState({ showDeleteConfirmationModal : false, toBeDeletedDvdId: ""})
+}
+
+handleDeleteConfirmationModalOpen = (event) => {
+  console.log("Opening Delete Confirmation Modal")
+  if (event) event.preventDefault();
+  this.setState({toBeDeletedDvdId: event.target.value});
+  console.log(`Attempting deleting dvd id ${this.state.toBeDeletedDvdId}`);
+  this.setState({showDeleteConfirmationModal: true});
+}
 
   handleEditModalClose = (event) => {
     console.log("Closing Edit Modal")
@@ -89,46 +121,11 @@ handleEditFormChange = (event) => {
 
 }
 
-// handleEditFormSubmit = (event) => {
-//   if (event) event.preventDefault();
-//   let dvdId = event.target.value;
-//   console.log(`Submitting edit for dvd id ${dvdId}`)
-//   console.log(this.state.editDvdData)
-
-//   fetch(SERVICE_URL+'/dvd/'+dvdId, {
-//       method: 'PUT',
-//       headers: {
-//           'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(this.state.editDvdData),
-//   })
-//   .then(response => response.json())
-//   .then(data => {
-//       console.log('Success:', data);
-//       this.setState({ showEditModal : false })
-//       this.loadContactData();
-//   })
-//   .catch((error) => {
-//       console.error('Error:', error);
-//   });
-
-// }
-
 handleEditFormSubmit = (event) => {
   if (event) event.preventDefault();
   let dvdId = event.target.value;
   console.log(`Submitting edit for dvd id ${dvdId}`)
-  // let dvdInfo = this.state.editDvdData;
-  // dvdInfo.id = dvdId;
-  // this.setState({ editDvdData : dvdInfo })
   console.log(this.state.editDvdData)
-
-  // let validationErrors = this.validateContact(this.state.editContactData)
-  // if(!validationErrors.isValid){
-  //   console.log("Edited contact is invalid. Reporting errors.")
-  //   this.setState({editFormErrors : validationErrors})
-  //   return
-  // }
 
   fetch(SERVICE_URL + '/dvd/' + dvdId, {
     method: 'PUT',
@@ -297,6 +294,7 @@ handleCreateFormChange = (event) => {
         <Row>
           <Col className="text-center">
             <DVDTable 
+            handleOpenDialog={this.handleDeleteConfirmationModalOpen}
             handleEdit={this.handleEditModalOpen}
             dvds={this.state.dvdData} />
           </Col>
@@ -315,7 +313,10 @@ handleCreateFormChange = (event) => {
          show={this.state.showEditModal}
          handleClose={this.handleEditModalClose}
          dvdData={this.state.editDvdData} />
-        {/* <DeleteModal /> */}
+        <DeleteConfirmationModal 
+        handleSubmit={this.handleDeleteDvd}
+        show={this.state.showDeleteConfirmationModal}
+        handleClose={this.handleDeleteConfirmationModalClose}/>
       </Container>
     );
   }
