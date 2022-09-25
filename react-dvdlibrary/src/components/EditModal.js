@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Modal } from 'react-bootstrap'
+import { Form, Button, Modal, Label } from 'react-bootstrap'
 
 class EditModal extends React.Component {
   render() {

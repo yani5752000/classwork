@@ -6,6 +6,7 @@ import CreateButton from './components/CreateButton';
 import CreateModal from './components/CreateModal';
 import EditModal from './components/EditModal';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
+import DvdInfoModal from './components/DvdInfoModal';
 
 import { Container, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,6 +20,7 @@ class App extends React.Component {
     showCreateModal: false,
     showEditModal: false,
     showDeleteConfirmationModal: false,
+    showDvdInfoModal: false,
     dvdData: [
       {
         "id": 1,
@@ -43,11 +45,45 @@ class App extends React.Component {
         "rating": "PG-10",
         "notes": "notes1ed"
       },
+      showDvdData: {
+        "id": 4,
+        "title": "hi0ed",
+        "releaseYear": "2011",
+        "director": "Janeseed",
+        "rating": "PG-10",
+        "notes": "notes1ed"
+      },
       toBeDeletedDvdId: "",
       newSearchParameters: {
         searchTerm: '',
         searchCategory: ''
       }
+  }
+
+  handleDvdInfoModalClose = (event) => {
+    console.log("Closing Dvd Info Modal")
+    this.setState({ showDvdInfoModal: false })
+  }
+  
+  handleDvdInfoModalOpen = (event) => {
+    console.log("Opening Dvd Info Modal")
+    if (event) event.preventDefault();
+    let dvdId = event.target.value;
+    console.log(`showing dvd id ${dvdId}`);
+    // submit a GET request to the /dvd/{dvdId} endpoint
+      // the response should come back with the associated dvd's JSON
+      fetch(SERVICE_URL+'/dvd/'+dvdId)
+      .then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+          this.setState(
+            { showDvdData : data , showDvdInfoModal : true}
+          )
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+
   }
 
   handleDeleteDvd = (event) => {
@@ -296,6 +332,7 @@ handleCreateFormChange = (event) => {
             <DVDTable 
             handleOpenDialog={this.handleDeleteConfirmationModalOpen}
             handleEdit={this.handleEditModalOpen}
+            handleShow={this.handleDvdInfoModalOpen}
             dvds={this.state.dvdData} />
           </Col>
         </Row>
@@ -317,6 +354,10 @@ handleCreateFormChange = (event) => {
         handleSubmit={this.handleDeleteDvd}
         show={this.state.showDeleteConfirmationModal}
         handleClose={this.handleDeleteConfirmationModalClose}/>
+        <DvdInfoModal 
+        show={this.state.showDvdInfoModal}
+        handleClose={this.handleDvdInfoModalClose}
+        dvdData={this.state.showDvdData} />
       </Container>
     );
   }
