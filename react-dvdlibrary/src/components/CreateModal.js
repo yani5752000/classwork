@@ -16,12 +16,16 @@ class ContactModal extends React.Component {
                 <Form.Group controlId="dvdTitle">
                     <Form.Label>Title:</Form.Label>
                     <Form.Control type="text" placeholder="Title" name="title"
-                    value={dvdData.title} onChange={handleChange}/>
+                    value={dvdData.title} onChange={handleChange} required/>
                 </Form.Group>
                 <Form.Group controlId="dvdReleaseYear">
                     <Form.Label>Release Year:</Form.Label>
                     <Form.Control type="text" placeholder="Release Year" name="releaseYear"
-                    value={dvdData.releaseYear} onChange={handleChange}/>
+                    value={dvdData.releaseYear} onChange={handleChange}
+                    pattern="[0-9]{4}"/>
+                    <Form.Text className="text-muted">
+                        Format Example: 1567
+                    </Form.Text>
                 </Form.Group>
                 <Form.Group controlId="dvdDirector">
                     <Form.Label>Director:</Form.Label>
@@ -49,11 +53,13 @@ class ContactModal extends React.Component {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                <Button variant="secondary" onClick={handleClose}>Close</Button>
             </Form>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            {/* <Button variant="secondary" onClick={handleClose}>Close</Button> */}
+            
             {/* <Button variant="primary" value={contactData.contactId}>Save changes</Button> */}
           </Modal.Footer>
         </Modal.Dialog>

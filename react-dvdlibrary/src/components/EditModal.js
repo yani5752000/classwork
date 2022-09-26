@@ -12,18 +12,22 @@ class EditModal extends React.Component {
           </Modal.Header>
 
           <Modal.Body>
-            <Form>
+            <Form onSubmit={()=>{handleSubmit()}}>
               <Form.Group controlId="dvdTitle">
                 <Form.Label>Title:</Form.Label>
                 <Form.Control type="text" placeholder="Title" name="title" 
                   onChange={handleChange}
-                  value={dvdData.title} />
+                  value={dvdData.title} required />
               </Form.Group>
               <Form.Group controlId="dvdReleaseYear">
                 <Form.Label>Release Year:</Form.Label>
                 <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                   onChange={handleChange}
-                  value={dvdData.releaseYear} />
+                  value={dvdData.releaseYear} 
+                  pattern="[0-9]{4}"/>
+                <Form.Text className="text-muted">
+                    Format Example: 1567
+                </Form.Text>
               </Form.Group>
               <Form.Group controlId="dvdDirector">
                 <Form.Label>Director:</Form.Label>
@@ -50,14 +54,18 @@ class EditModal extends React.Component {
                   onChange={handleChange}
                   value={dvdData.notes} />
               </Form.Group>
+                <Button variant="primary" type="submit" value={dvdData.id}>
+                Save changes
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>Close</Button>
             </Form>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            {/* <Button variant="secondary" onClick={handleClose}>Close</Button>
             <Button variant="primary" 
             onClick={handleSubmit}
-            value={dvdData.id}>Save changes</Button>
+            value={dvdData.id}>Save changes</Button> */}
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>

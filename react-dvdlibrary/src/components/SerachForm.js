@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 class SearchForm extends React.Component {
    render(){
-    let { searchParameters, handleSubmit, handleSearchTermChange, handleSearchCategoryChange } = this.props;
+    let { searchParameters, searchErrors, handleSubmit, handleSearchTermChange, handleSearchCategoryChange } = this.props;
     return (
           <Form onSubmit={handleSubmit}>
             <Container>
@@ -15,19 +15,32 @@ class SearchForm extends React.Component {
                   </Button>
                 </Col>
                 <Col sm={4}>
-                  <Form.Select aria-label="Default select example"
-                  name="searchCategory"
-                  onChange={handleSearchCategoryChange}>
-                    <option>Search Category</option>
-                    <option value="title">Title</option>
-                    <option value="releaseYear">Release Year</option>
-                    <option value="director">Director Name</option>
-                    <option value="rating">Rating</option>
-                  </Form.Select>
+                  <Form.Group>
+                    <Form.Control as="select"
+                    name="searchCategory"
+                    onChange={handleSearchCategoryChange} required>
+                      <option>Search Category</option>
+                      <option value="title">Title</option>
+                      <option value="releaseYear">Release Year</option>
+                      <option value="director">Director Name</option>
+                      <option value="rating">Rating</option>
+                    </Form.Control>
+                    {/* <Form.Select aria-label="Default select example"
+                    name="searchCategory"
+                    onChange={handleSearchCategoryChange} required>
+                      <option>Search Category</option>
+                      <option value="title">Title</option>
+                      <option value="releaseYear">Release Year</option>
+                      <option value="director">Director Name</option>
+                      <option value="rating">Rating</option>
+                    </Form.Select> */}
+                  </Form.Group>
                 </Col>
                 <Col sm={6}>
-                  <Form.Control type="text" placeholder="Search Term" name="searchTerm"
-                  value={searchParameters.searchTerm} onChange={handleSearchTermChange} />
+                  <Form.Group>
+                    <Form.Control type="text" placeholder="Search Term" name="searchTerm"
+                    value={searchParameters.searchTerm} onChange={handleSearchTermChange} required />
+                  </Form.Group>
                 </Col>
               </Row>
             </Container>

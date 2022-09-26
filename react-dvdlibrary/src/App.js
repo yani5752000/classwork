@@ -159,7 +159,8 @@ handleEditFormChange = (event) => {
 
 handleEditFormSubmit = (event) => {
   if (event) event.preventDefault();
-  let dvdId = event.target.value;
+  // let dvdId = event.target.value;
+  let dvdId = this.state.editDvdData.id;
   console.log(`Submitting edit for dvd id ${dvdId}`)
   console.log(this.state.editDvdData)
 
