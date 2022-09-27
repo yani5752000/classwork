@@ -53,11 +53,37 @@ class App extends React.Component {
         "rating": "PG-10",
         "notes": "notes1ed"
       },
+      searchFormErrors: {
+        searchTerm: '',
+        searchCategory: ''
+      },
       toBeDeletedDvdId: "",
       newSearchParameters: {
         searchTerm: '',
         searchCategory: ''
-      }
+      },
+      showSearchFormErrorMessage: false
+  }
+
+  validateSearch = (search) => {
+    let errors = {
+      searchCategory : "",
+      searchTerm: "",
+      isValid: true
+    }
+
+    let isInvalid = false;
+
+    if(!search.searchCategory){
+      errors.searchCategory = "Please select a category."
+      errors.isValid = false;
+    }
+
+    if(!search.searchTerm){
+      errors.searchTerm = "Please enter a search term."
+      errors.isValid = false;
+    }
+    return errors;
   }
 
   handleDvdInfoModalClose = (event) => {
@@ -278,7 +304,21 @@ handleCreateFormChange = (event) => {
     console.log("processing the search!")
     if (event) event.preventDefault();
 
+    let validationErrors = this.validateSearch(this.state.newSearchParameters)
+    if(!validationErrors.isValid){
+      console.log("The search is invalid. Reporting errors.", validationErrors)
+      this.setState({searchFormErrors : validationErrors,
+      showSearchFormErrorMessage: true})
+      return
+    }
+
     this.loadSearchedDvdData(this.state.newSearchParameters);
+    this.setState({searchFormErrors: validationErrors,
+      showSearchFormErrorMessage: false,
+      newSearchParameters: {
+        searchTerm: '',
+        searchCategory: ''
+      }})
   }
 
   loadSearchedDvdData(parameters) {
@@ -324,7 +364,13 @@ handleCreateFormChange = (event) => {
             handleSubmit={this.handleSearchFormSubmit}
             handleSearchTermChange={this.handleSearchTermChange}
             handleSearchCategoryChange={this.handleSearchCategoryChange}
-            searchParameters={this.state.newSearchParameters} />
+            searchParameters={this.state.newSearchParameters}
+            searchErrors={this.state.searchFormErrors} />
+            {this.state.showSearchFormErrorMessage 
+            && <div className="border border-dark w-50 p-3"
+            style={{backgroundColor: "rgba(255, 0, 0, 0.1)"}}
+            >Both Search Category and Search Term are required.</div>
+            }
           </Col>
         </Row>
         <hr />

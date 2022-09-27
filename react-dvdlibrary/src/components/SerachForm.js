@@ -16,30 +16,41 @@ class SearchForm extends React.Component {
                 </Col>
                 <Col sm={4}>
                   <Form.Group>
-                    <Form.Control as="select"
+                    {/* <Form.Control as="select"
                     name="searchCategory"
-                    onChange={handleSearchCategoryChange} required>
+                    value={searchParameters.searchCategory}
+                    onChange={handleSearchCategoryChange}
+                    isInvalid={!!searchErrors.searchCategory}>
                       <option>Search Category</option>
                       <option value="title">Title</option>
                       <option value="releaseYear">Release Year</option>
                       <option value="director">Director Name</option>
                       <option value="rating">Rating</option>
-                    </Form.Control>
-                    {/* <Form.Select aria-label="Default select example"
+                    </Form.Control> */}
+                    {/* <Form.Control.Feedback type="invalid">
+                      {searchErrors.searchCategory}
+                    </Form.Control.Feedback> */}
+                    <Form.Select aria-label="Default select example"
                     name="searchCategory"
-                    onChange={handleSearchCategoryChange} required>
+                    value={searchParameters.searchCategory}
+                    onChange={handleSearchCategoryChange}
+                    isInvalid={!!searchErrors.searchCategory}>
                       <option>Search Category</option>
                       <option value="title">Title</option>
                       <option value="releaseYear">Release Year</option>
                       <option value="director">Director Name</option>
                       <option value="rating">Rating</option>
-                    </Form.Select> */}
+                    </Form.Select>
                   </Form.Group>
                 </Col>
                 <Col sm={6}>
                   <Form.Group>
                     <Form.Control type="text" placeholder="Search Term" name="searchTerm"
-                    value={searchParameters.searchTerm} onChange={handleSearchTermChange} required />
+                    value={searchParameters.searchTerm} onChange={handleSearchTermChange} 
+                    isInvalid={!!searchErrors.searchTerm} />
+                    {/* <Form.Control.Feedback type="invalid">
+                      {searchErrors.searchTerm}
+                    </Form.Control.Feedback> */}
                   </Form.Group>
                 </Col>
               </Row>
