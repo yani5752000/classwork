@@ -3,7 +3,7 @@ import { Form, Button, Modal } from 'react-bootstrap'
 
 class ContactModal extends React.Component {
   render() {
-    let { dvdData, show, handleClose, handleChange, handleSubmit } = this.props;
+    let { dvdData, show, dvdErrors, handleClose, handleChange, handleSubmit } = this.props;
     return (
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Dialog>
@@ -16,13 +16,15 @@ class ContactModal extends React.Component {
                 <Form.Group controlId="dvdTitle">
                     <Form.Label>Title:</Form.Label>
                     <Form.Control type="text" placeholder="Title" name="title"
-                    value={dvdData.title} onChange={handleChange} required/>
+                    value={dvdData.title} onChange={handleChange} 
+                    isInvalid={!!dvdErrors.title}/>
                 </Form.Group>
                 <Form.Group controlId="dvdReleaseYear">
                     <Form.Label>Release Year:</Form.Label>
                     <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                     value={dvdData.releaseYear} onChange={handleChange}
-                    pattern="[0-9]{4}"/>
+                    pattern="[0-9]{4}" 
+                    isInvalid={!!dvdErrors.releaseYear}/>
                     <Form.Text className="text-muted">
                         Format Example: 1567
                     </Form.Text>

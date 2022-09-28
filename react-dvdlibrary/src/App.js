@@ -62,7 +62,56 @@ class App extends React.Component {
         searchTerm: '',
         searchCategory: ''
       },
-      showSearchFormErrorMessage: false
+      showSearchFormErrorMessage: false,
+      createFormErrors : {
+        title : '',
+        releaseYear : ''
+      }
+  }
+
+  validateContact = (dvd) => {
+    let errors = {
+      title : "",
+      releaseYear: "",
+      isValid: true
+    }
+
+    let isInvalid = false;
+
+    if(!dvd.title){
+      errors.firstName = "Please enter a title."
+      errors.isValid = false;
+    }
+
+    if(!contact.lastName){
+      errors.lastName = "Please enter a last name."
+      errors.isValid = false;
+    }
+
+    if(!contact.company){
+      errors.company = "Please enter the company name."
+      errors.isValid = false;
+    }
+
+    if(!contact.phone && !contact.email){
+      errors.phone = "Please enter a phone or email contact (or both)."
+      errors.email = "Please enter a phone or email contact (or both)."
+      errors.isValid = false;
+    }
+
+    let phonePattern = "[0-9]{3}-[0-9]{4}";
+    if(contact.phone && !contact.phone.match(phonePattern)){
+      errors.phone = "Please match the expected pattern."
+      errors.isValid = false;
+    }
+
+    let emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+    if(contact.email && !contact.email.match(emailPattern)){
+      errors.email = "Please match the expected pattern."
+      errors.isValid = false;
+    }
+
+    return errors;
   }
 
   validateSearch = (search) => {
