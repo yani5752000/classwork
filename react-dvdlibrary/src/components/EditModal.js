@@ -3,7 +3,9 @@ import { Form, Button, Modal, Label } from 'react-bootstrap'
 
 class EditModal extends React.Component {
   render() {
-    let { dvdData, handleSubmit, handleChange, show, handleClose } = this.props;
+    let { dvdData, dvdErrors, handleSubmit, handleChange, show, handleClose,
+      showEditFormTitleErrorMessage,
+      showEditFormReleaseYearErrorMessage } = this.props;
     return (
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Dialog>
@@ -12,19 +14,31 @@ class EditModal extends React.Component {
           </Modal.Header>
 
           <Modal.Body>
-            <Form onSubmit={()=>{handleSubmit()}}>
+            {this.props.showEditFormTitleErrorMessage 
+              && <div className="border border-dark w-100 p-3"
+              style={{backgroundColor: "rgba(255, 0, 0, 0.1)"}}
+              >Please enter a title for the DVD.</div>
+              }
+            {this.props.showEditFormReleaseYearErrorMessage
+              && <div className="border border-dark w-100 p-3"
+              style={{backgroundColor: "rgba(255, 0, 0, 0.1)"}}
+              >Please enter a 4-digit year.</div>
+              }
+            <Form onSubmit={handleSubmit}>
               <Form.Group controlId="dvdTitle">
                 <Form.Label>Title:</Form.Label>
                 <Form.Control type="text" placeholder="Title" name="title" 
                   onChange={handleChange}
-                  value={dvdData.title} required />
+                  value={dvdData.title}
+                  isInvalid={!!dvdErrors.title}/>
               </Form.Group>
               <Form.Group controlId="dvdReleaseYear">
                 <Form.Label>Release Year:</Form.Label>
                 <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                   onChange={handleChange}
                   value={dvdData.releaseYear} 
-                  pattern="[0-9]{4}" required/>
+                  pattern="[0-9]{4}" 
+                  isInvalid={!!dvdErrors.releaseYear}/>
                 <Form.Text className="text-muted">
                     Format Example: 1567
                 </Form.Text>

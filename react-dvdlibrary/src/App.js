@@ -39,10 +39,10 @@ class App extends React.Component {
       },
       editDvdData: {
         "id": 4,
-        "title": "hi0ed",
-        "releaseYear": "2011",
-        "director": "Janeseed",
-        "rating": "PG-10",
+        "title": "",
+        "releaseYear": "",
+        "director": "",
+        "rating": "",
         "notes": "notes1ed"
       },
       showDvdData: {
@@ -66,10 +66,22 @@ class App extends React.Component {
       createFormErrors : {
         title : '',
         releaseYear : ''
-      }
+      },
+      createFormErrors : {
+        title : '',
+        releaseYear : ''
+      },
+      showCreateFormTitleErrorMessage: false,
+      showCreateFormReleaseYearErrorMessage: false,
+      editFormErrors : {
+        title : '',
+        releaseYear : ''
+      },
+      showEditFormTitleErrorMessage: false,
+      showEditFormReleaseYearErrorMessage: false
   }
 
-  validateContact = (dvd) => {
+  validateDvd = (dvd) => {
     let errors = {
       title : "",
       releaseYear: "",
@@ -79,35 +91,18 @@ class App extends React.Component {
     let isInvalid = false;
 
     if(!dvd.title){
-      errors.firstName = "Please enter a title."
+      errors.title = "Please enter a title."
       errors.isValid = false;
     }
 
-    if(!contact.lastName){
-      errors.lastName = "Please enter a last name."
+    if(!dvd.releaseYear){
+      errors.releaseYear = "Please enter a release year."
       errors.isValid = false;
     }
 
-    if(!contact.company){
-      errors.company = "Please enter the company name."
-      errors.isValid = false;
-    }
-
-    if(!contact.phone && !contact.email){
-      errors.phone = "Please enter a phone or email contact (or both)."
-      errors.email = "Please enter a phone or email contact (or both)."
-      errors.isValid = false;
-    }
-
-    let phonePattern = "[0-9]{3}-[0-9]{4}";
-    if(contact.phone && !contact.phone.match(phonePattern)){
-      errors.phone = "Please match the expected pattern."
-      errors.isValid = false;
-    }
-
-    let emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-    if(contact.email && !contact.email.match(emailPattern)){
-      errors.email = "Please match the expected pattern."
+    let releaseYearPattern = "[0-9]{4}";
+    if(dvd.releaseYear && !dvd.releaseYear.match(releaseYearPattern)){
+      errors.releaseYear = "Please match the expected pattern."
       errors.isValid = false;
     }
 
@@ -239,6 +234,22 @@ handleEditFormSubmit = (event) => {
   console.log(`Submitting edit for dvd id ${dvdId}`)
   console.log(this.state.editDvdData)
 
+  this.setState({showEditFormTitleErrorMessage: false,
+  showEditFormReleaseYearErrorMessage: false})
+
+  let validationErrors = this.validateDvd(this.state.editDvdData)
+  if(!validationErrors.isValid){
+    console.log("Edited DVD is invalid. Reporting errors.", validationErrors)
+    this.setState({editFormErrors : validationErrors});
+    if(validationErrors.title) {
+      this.setState({showEditFormTitleErrorMessage: true});
+    }
+    if(validationErrors.releaseYear) {
+      this.setState({showEditFormReleaseYearErrorMessage: true});
+    }
+    return
+  }
+
   fetch(SERVICE_URL + '/dvd/' + dvdId, {
     method: 'PUT',
     headers: {
@@ -250,6 +261,12 @@ handleEditFormSubmit = (event) => {
     .then(data => {
       console.log('Success:', data);
       this.setState({ showEditModal: false})
+      this.setState({ 
+      showEditFormTitleErrorMessage: false,
+      showEditFormReleaseYearErrorMessage: false,
+      showEditModal: false,
+      EditFormErrors: validationErrors
+     })
       this.loadDvdData();
     })
     .catch((error) => {
@@ -278,6 +295,22 @@ handleCreateFormChange = (event) => {
     console.log("Adding dvd!")
     if (event) event.preventDefault();
 
+    this.setState({showCreateFormTitleErrorMessage: false,
+    showCreateFormReleaseYearErrorMessage: false})
+
+    let validationErrors = this.validateDvd(this.state.newDvdData)
+    if(!validationErrors.isValid){
+      console.log("The new DVD is invalid. Reporting errors.", validationErrors)
+      this.setState({createFormErrors : validationErrors});
+      if(validationErrors.title) {
+        this.setState({showCreateFormTitleErrorMessage: true});
+      }
+      if(validationErrors.releaseYear) {
+        this.setState({showCreateFormReleaseYearErrorMessage: true});
+      }
+      return
+    }
+
     fetch(SERVICE_URL + '/dvd/', {
       method: 'POST',
       headers: {
@@ -289,13 +322,18 @@ handleCreateFormChange = (event) => {
       .then(data => {
         console.log('Add DVD - Success:', data);
         this.setState({ newDvdtData: { title: '', releaseYear: '', director: '', rating: '', notes: '' },
-       showCreateModal: false })
+        showCreateFormTitleErrorMessage: false,
+        showCreateFormReleaseYearErrorMessage: false,
+        showCreateModal: false,
+        createFormErrors: validationErrors
+       })
         this.loadDvdData();
       })
       .catch((error) => {
         console.log('Add Contact - Error:')
         console.log(error)
       });
+
   }
 
   handleCreateModalClose = (event) => {
@@ -434,6 +472,9 @@ handleCreateFormChange = (event) => {
         </Row>
         <hr />
         <CreateModal 
+        dvdErrors={this.state.createFormErrors}
+        showCreateFormTitleErrorMessage={this.state.showCreateFormTitleErrorMessage}
+        showCreateFormReleaseYearErrorMessage={this.state.showCreateFormReleaseYearErrorMessage}
         handleSubmit={this.handleCreateFormSubmit}
         handleChange={this.handleCreateFormChange}
         show={this.state.showCreateModal}
@@ -441,6 +482,9 @@ handleCreateFormChange = (event) => {
         dvdData={this.state.newDvdData} 
         />
         <EditModal
+         dvdErrors={this.state.editFormErrors}
+         showEditFormTitleErrorMessage={this.state.showEditFormTitleErrorMessage}
+         showEditFormReleaseYearErrorMessage={this.state.showEditFormReleaseYearErrorMessage}
          handleSubmit={this.handleEditFormSubmit}
          handleChange={this.handleEditFormChange}
          show={this.state.showEditModal}

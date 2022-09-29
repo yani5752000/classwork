@@ -3,7 +3,10 @@ import { Form, Button, Modal } from 'react-bootstrap'
 
 class ContactModal extends React.Component {
   render() {
-    let { dvdData, show, dvdErrors, handleClose, handleChange, handleSubmit } = this.props;
+    let { dvdData, show, dvdErrors, handleClose, handleChange, handleSubmit,
+      showCreateFormTitleErrorMessage,
+        showCreateFormReleaseYearErrorMessage
+     } = this.props;
     return (
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Dialog>
@@ -12,6 +15,16 @@ class ContactModal extends React.Component {
           </Modal.Header> */}
 
           <Modal.Body>
+          {this.props.showCreateFormTitleErrorMessage 
+            && <div className="border border-dark w-5100 p-3"
+            style={{backgroundColor: "rgba(255, 0, 0, 0.1)"}}
+            >Please enter a title for the DVD.</div>
+            }
+          {this.props.showCreateFormReleaseYearErrorMessage
+            && <div className="border border-dark w-100 p-3"
+            style={{backgroundColor: "rgba(255, 0, 0, 0.1)"}}
+            >Please enter a 4-digit year.</div>
+            }
           <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="dvdTitle">
                     <Form.Label>Title:</Form.Label>
@@ -23,7 +36,6 @@ class ContactModal extends React.Component {
                     <Form.Label>Release Year:</Form.Label>
                     <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                     value={dvdData.releaseYear} onChange={handleChange}
-                    pattern="[0-9]{4}" 
                     isInvalid={!!dvdErrors.releaseYear}/>
                     <Form.Text className="text-muted">
                         Format Example: 1567
