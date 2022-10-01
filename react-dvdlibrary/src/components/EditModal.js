@@ -30,7 +30,8 @@ class EditModal extends React.Component {
                 <Form.Control type="text" placeholder="Title" name="title" 
                   onChange={handleChange}
                   value={dvdData.title}
-                  isInvalid={!!dvdErrors.title}/>
+                  isInvalid={!!dvdErrors.title}
+                  />
               </Form.Group>
               {/* <Form.Group controlId="dvdReleaseYear">
                 <Form.Label>Release Year:</Form.Label>
@@ -46,7 +47,8 @@ class EditModal extends React.Component {
                     <Form.Label>Release Year:</Form.Label>
                     <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                     value={dvdData.releaseYear} onChange={handleChange}
-                    isInvalid={!!dvdErrors.releaseYear}/>
+                    isInvalid={!!dvdErrors.releaseYear}
+                    />
                     <Form.Text className="text-muted">
                         Format Example: 1567
                     </Form.Text>

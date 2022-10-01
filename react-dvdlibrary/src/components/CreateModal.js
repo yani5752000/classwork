@@ -51,9 +51,9 @@ class ContactModal extends React.Component {
                     <Form.Select aria-label="Default select example"
                     name="rating"
                     onChange={handleChange}>
-                      <option>Choose Rating</option>
-                      <option value="P">P</option>
+                      {/* <option>Choose Rating</option> */}
                       <option value="G">G</option>
+                      <option value="P">P</option>
                       <option value="R">R</option>
                       <option value="PG">PG</option>
                       <option value="PG-13">PG-13</option>

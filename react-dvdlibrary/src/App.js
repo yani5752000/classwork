@@ -34,8 +34,8 @@ class App extends React.Component {
         "title": "",
         "releaseYear": "",
         "director": "",
-        "rating": "",
-        "notes": "notes2"
+        "rating": "G",
+        "notes": ""
       },
       editDvdData: {
         "id": 4,
@@ -82,6 +82,7 @@ class App extends React.Component {
   }
 
   validateDvd = (dvd) => {
+    console.log("validate for edit submit: ", dvd);
     let errors = {
       title : "",
       releaseYear: "",
@@ -202,9 +203,11 @@ handleEditModalOpen = (event) => {
       .then(response => response.json())
       .then(data => {
           console.log('Success:', data);
+          data.releaseYear = data.releaseYear + "";
+          data.rating = "G";
           this.setState(
             { editDvdData : data , showEditModal : true}
-          )
+          );
       })
       .catch((error) => {
           console.error('Error:', error);
@@ -238,7 +241,7 @@ handleEditFormSubmit = (event) => {
   showEditFormReleaseYearErrorMessage: false})
 
   let validationErrors = this.validateDvd(this.state.editDvdData)
-  console.log("editsubmit va,idation errors: ", validationErrors);
+  console.log("editsubmit validation errors: ", validationErrors);
   if(!validationErrors.isValid){
     console.log("Edited DVD is invalid. Reporting errors.", validationErrors)
     this.setState({editFormErrors : validationErrors});
@@ -261,7 +264,7 @@ handleEditFormSubmit = (event) => {
     .then(response => console.log("respppp: ", response))
     .then(data => {
       console.log('Success:', data);
-      this.setState({ showEditModal: false})
+      
       this.setState({ 
       showEditFormTitleErrorMessage: false,
       showEditFormReleaseYearErrorMessage: false,
@@ -322,7 +325,13 @@ handleCreateFormChange = (event) => {
       .then(response => response.json())
       .then(data => {
         console.log('Add DVD - Success:', data);
-        this.setState({ newDvdtData: { title: '', releaseYear: '', director: '', rating: '', notes: '' },
+        this.setState({ newDvdData: {
+          "title": "",
+          "releaseYear": "",
+          "director": "",
+          "rating": "G",
+          "notes": ""
+        },
         showCreateFormTitleErrorMessage: false,
         showCreateFormReleaseYearErrorMessage: false,
         showCreateModal: false,
@@ -339,7 +348,14 @@ handleCreateFormChange = (event) => {
 
   handleCreateModalClose = (event) => {
       console.log("Closing Create Modal")
-      this.setState({ showCreateModal : false})
+      this.setState({ showCreateModal : false,
+        newDvdData: {
+          "title": "",
+          "releaseYear": "",
+          "director": "",
+          "rating": "G",
+          "notes": ""
+        } })
   }
 
   handleCreateModalOpen = (event) => {
