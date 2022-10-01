@@ -238,6 +238,7 @@ handleEditFormSubmit = (event) => {
   showEditFormReleaseYearErrorMessage: false})
 
   let validationErrors = this.validateDvd(this.state.editDvdData)
+  console.log("editsubmit va,idation errors: ", validationErrors);
   if(!validationErrors.isValid){
     console.log("Edited DVD is invalid. Reporting errors.", validationErrors)
     this.setState({editFormErrors : validationErrors});

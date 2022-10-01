@@ -32,17 +32,25 @@ class EditModal extends React.Component {
                   value={dvdData.title}
                   isInvalid={!!dvdErrors.title}/>
               </Form.Group>
-              <Form.Group controlId="dvdReleaseYear">
+              {/* <Form.Group controlId="dvdReleaseYear">
                 <Form.Label>Release Year:</Form.Label>
                 <Form.Control type="text" placeholder="Release Year" name="releaseYear"
                   onChange={handleChange}
                   value={dvdData.releaseYear} 
-                  pattern="[0-9]{4}" 
                   isInvalid={!!dvdErrors.releaseYear}/>
                 <Form.Text className="text-muted">
                     Format Example: 1567
                 </Form.Text>
-              </Form.Group>
+              </Form.Group> */}
+              <Form.Group controlId="dvdReleaseYear">
+                    <Form.Label>Release Year:</Form.Label>
+                    <Form.Control type="text" placeholder="Release Year" name="releaseYear"
+                    value={dvdData.releaseYear} onChange={handleChange}
+                    isInvalid={!!dvdErrors.releaseYear}/>
+                    <Form.Text className="text-muted">
+                        Format Example: 1567
+                    </Form.Text>
+                </Form.Group>
               <Form.Group controlId="dvdDirector">
                 <Form.Label>Director:</Form.Label>
                 <Form.Control type="text" placeholder="Director" name="director"
