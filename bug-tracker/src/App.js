@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import SubmitFormHtml from "./components/SubmitFormHtml";
-import SetStateExample from "./components/SetStateExample";
+import SubmitFormValidated from "./components/SubmitFormValidated";
  
 class App extends Component {
   render() {
     return (
       <div className="container">
-        <h3>React Form - HTML</h3>
-        <SetStateExample></SetStateExample>
-        <SubmitFormHtml />
+        <h3 style={{ textAlign: "center" }}>React Form - Validated</h3>
         <br />
+        <SubmitFormValidated />
       </div>
     );
   }
