@@ -3,6 +3,7 @@ import { MDBDataTable } from 'mdbreact';
 import { view } from '@risingstack/react-easy-state'
 
 import reviewStore from '../stores/review_store'
+import DashboardMenu from './dashboard_menu';
 
 class ReviewsTable extends Component {
     render() {
@@ -11,16 +12,20 @@ class ReviewsTable extends Component {
             rows: this.getRows(reviewStore.reviews)
         }
         return (
-            <
-                MDBDataTable
-                striped
-                bordered
-                hover
-                scrollX
-                responsive
-                maxHeight="50vh"
-                data={data}
-            />          
+            <div>
+                <DashboardMenu />
+                <
+                    MDBDataTable
+                    striped
+                    bordered
+                    hover
+                    scrollX
+                    responsive
+                    maxHeight="50vh"
+                    data={data}
+                /> 
+            </div>
+                     
         )
     }
 

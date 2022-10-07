@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom"
 import reviewStore from '../stores/review_store'
 import DashboardMenu from "../components/dashboard_menu"
 import ReviewsTable from "../components/reviews_table"
+import HomePage from "./home_page"
+import AboutPage from "./about_page"
 
 class DashboardPage extends Component {
     componentDidMount() {
@@ -14,10 +16,10 @@ class DashboardPage extends Component {
         return (
             <div id="dashboard_page" className="App-page">
                 <DashboardMenu/>
-                
-                <Routes>
-                     <Route path='/dashboard/reviews_table' element={<ReviewsTable />} />
-                </Routes>
+                {/* <Routes>
+                    <Route path='/dashboard' element={() => { this.render(<div>Dashboard Content</div>) }} />
+                    <Route path='/dashboard/reviews_table' element={<ReviewsTable />} />
+                </Routes> */}
             </div>
         )
     }
