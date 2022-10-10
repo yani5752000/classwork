@@ -81,14 +81,11 @@ class Inventory extends React.Component {
       {this.props.items.map((item, id) => (
         <Col>
           <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Header>{id + 1}</Card.Header>
             <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>
-                This is a longer card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </Card.Text>
+              <Card.Title className="text-center">{item.name}</Card.Title>
+              <Card.Text className="text-center">${item.price}</Card.Text>
+              <Card.Text className="text-center">Quantity Left: {item.quantity}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
