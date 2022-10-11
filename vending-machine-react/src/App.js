@@ -20,7 +20,28 @@ class App extends React.Component {
         "name": "Snickers", 
         "price": 1.5, 
         "quantity": 10 
-      }]
+      }],
+      deposit: 0,
+      hi: "hiiii",
+      itemsData1: [
+        { 
+          "id": 1, 
+          "name": "Snickers", 
+          "price": 1.5, 
+          "quantity": 10 
+        }]
+  }
+  
+  addToDeposit(event) {
+    let inputValue = event.target.value;
+    // let x = this.state.deposit;
+    // let v = 200;
+    // console.log("here we are: ", this.state.hi);
+    this.setState(prevState => ({
+      deposit: prevState.deposit + 100
+    }), () => console.log(this.state));
+  
+    // this.setState({deposit: this.state.deposit + 1});
   }
 
   componentDidMount() {
@@ -40,6 +61,7 @@ class App extends React.Component {
         <Row>
           <Col>
             <h1 className="text-center">Vending Machine</h1>
+            <h4>{this.state.hi}</h4>
           </Col>
         </Row>
         <hr />
@@ -50,26 +72,23 @@ class App extends React.Component {
           <Col sm={4}>
             <Row>
               <Col>
-                <PayInForm />
+                <PayInForm deposit={this.state.deposit} addToDeposit={this.addToDeposit} />
               </Col>
             </Row>
             <hr />
             <Row>
               <Col>
-                <h2>Messages</h2>
                 <MessageForm />
               </Col>
             </Row>
             <hr />
             <Row>
               <Col>
-                <h2>Change</h2>
                 <PayBackForm />
               </Col>
             </Row>
           </Col>
         </Row>
-        {/* <ContactModal /> */}
       </Container>
     );
   }

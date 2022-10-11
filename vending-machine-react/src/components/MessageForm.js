@@ -6,30 +6,21 @@ import { Form, Button } from 'react-bootstrap'
 
 class MessageForm extends React.Component {
     static defaultProps = {
-        totalIn: 0
+        message: "thank you",
+        item: 1
     }
 
     render() {
         return (
             <Form>
-                <div>Total $ In</div>
-                <div>{this.props.totalIn}</div>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <h4 className="text-center">Messages</h4>
+                <div className="text-center">{this.props.message}</div>
+                <h4 className="text-center">Item: {this.props.item}</h4>
+                <div className="text-center">
+                    <Button variant="primary">
+                        Make Purchase
+                    </Button>
+                </div>
             </Form>
         )
     }

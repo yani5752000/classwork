@@ -6,30 +6,19 @@ import { Form, Button } from 'react-bootstrap'
 
 class PayBackForm extends React.Component {
     static defaultProps = {
-        totalIn: 0
+        change: 1.25
     }
 
     render() {
         return (
             <Form>
-                <div>Total $ In</div>
-                <div>{this.props.totalIn}</div>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-                
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <h4 className="text-center">Change</h4>
+                <div className="text-center">{this.props.change}</div>
+                <div className="text-center">
+                    <Button variant="primary">
+                        Change Return
+                    </Button>
+                </div>
             </Form>
         )
     }
