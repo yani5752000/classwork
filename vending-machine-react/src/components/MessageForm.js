@@ -11,11 +11,12 @@ class MessageForm extends React.Component {
     }
 
     render() {
+        let { itemNumber } = this.props;
         return (
             <Form>
                 <h4 className="text-center">Messages</h4>
                 <div className="text-center">{this.props.message}</div>
-                <h4 className="text-center">Item: {this.props.item}</h4>
+                <h4 className="text-center">Item: {itemNumber}</h4>
                 <div className="text-center">
                     <Button variant="primary">
                         Make Purchase

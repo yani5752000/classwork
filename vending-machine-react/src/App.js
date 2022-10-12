@@ -21,27 +21,35 @@ class App extends React.Component {
         "price": 1.5, 
         "quantity": 10 
       }],
-      deposit: 0,
-      hi: "hiiii",
-      itemsData1: [
-        { 
-          "id": 1, 
-          "name": "Snickers", 
-          "price": 1.5, 
-          "quantity": 10 
-        }]
+    deposit: (0).toFixed(2),
+    itemNumber: 0
+  }
+
+  getItemNumber = (event) => {
+    console.log("target: ", event.target);
+    console.log("event target id: ", event.target.id);
+    let itemNumber = event.target.id;
+    console.log("item Number: ", itemNumber);
+    this.setState({itemNumber: itemNumber});
   }
   
-  addToDeposit(event) {
-    let inputValue = event.target.value;
-    // let x = this.state.deposit;
-    // let v = 200;
-    // console.log("here we are: ", this.state.hi);
+  addToDeposit = (event) => {
+    let inputValue;
+    switch ( event.target.name ) {
+      case "dollar": inputValue = 100;
+      break;
+      case "quarter": inputValue = 25;
+      break
+      case "dime": inputValue = 10;
+      break;
+      case "nickle": inputValue = 5;
+      break;
+      default: break;
+    }
+
     this.setState(prevState => ({
-      deposit: prevState.deposit + 100
+      deposit: (( prevState.deposit * 100 + inputValue ) / 100).toFixed(2)
     }), () => console.log(this.state));
-  
-    // this.setState({deposit: this.state.deposit + 1});
   }
 
   componentDidMount() {
@@ -61,13 +69,14 @@ class App extends React.Component {
         <Row>
           <Col>
             <h1 className="text-center">Vending Machine</h1>
-            <h4>{this.state.hi}</h4>
           </Col>
         </Row>
         <hr />
         <Row>
           <Col sm={8}>
-            <Inventory items={this.state.itemsData} />
+            <Inventory 
+            items={this.state.itemsData} 
+            getItemNumber={this.getItemNumber} />
           </Col>
           <Col sm={4}>
             <Row>
@@ -78,7 +87,7 @@ class App extends React.Component {
             <hr />
             <Row>
               <Col>
-                <MessageForm />
+                <MessageForm itemNumber={this.state.itemNumber} />
               </Col>
             </Row>
             <hr />

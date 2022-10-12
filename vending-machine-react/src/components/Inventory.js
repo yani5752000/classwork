@@ -73,19 +73,20 @@ class Inventory extends React.Component {
     }
 
     render() {
-        // Here is a debug method to monitor incoming contact data
+        let {getItemNumber} = this.props;
+        // Here is a debug method to monitor incoming item's data
         console.log("Rendering Items' Cards:")
         console.log(this.props.items)
         return (
             <Row xs={1} md={3} className="g-4">
-      {this.props.items.map((item, id) => (
+      {this.props.items.map((item, index) => (
         <Col>
-          <Card>
-            <Card.Header>{id + 1}</Card.Header>
-            <Card.Body>
-              <Card.Title className="text-center">{item.name}</Card.Title>
-              <Card.Text className="text-center">${item.price}</Card.Text>
-              <Card.Text className="text-center">Quantity Left: {item.quantity}</Card.Text>
+          <Card key={index} id={index + 1} onClick={getItemNumber}>
+            <Card.Header id={index + 1}>{index + 1}</Card.Header>
+            <Card.Body id={index + 1}>
+              <Card.Title id={index + 1} className="text-center">{item.name}</Card.Title>
+              <Card.Text id={index + 1} className="text-center">${item.price}</Card.Text>
+              <Card.Text id={index + 1} className="text-center">Quantity Left: {item.quantity}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
