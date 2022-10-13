@@ -22,7 +22,73 @@ class App extends React.Component {
         "quantity": 10 
       }],
     deposit: (0).toFixed(2),
-    itemNumber: 0
+    itemNumber: 0,
+    message: "",
+    responseChange: {
+      quarters: 0,
+      dimes: 0,
+      nickels: 0,
+      pennies: 0
+    },
+    changeStatement: ""
+  }
+
+  giveChange = (event) => {
+    let statement = "";
+    if (this.state.responseChange.quarters == 1) {
+      statement += "1 Quarter";
+    }
+    if (this.state.responseChange.quarters > 1) {
+      statement += this.state.responseChange.quarters + " Quarters";
+    }
+    if (this.state.responseChange.dimes == 1) {
+      statement += " 1 Dime";
+    }
+    if (this.state.responseChange.dimes > 1) {
+      statement += " " + this.state.responseChange.dimes + " Dimes";
+    }
+    if (this.state.responseChange.nickels == 1) {
+      statement += " 1 Nickel";
+    }
+    if (this.state.responseChange.nickels > 1) {
+      statement += " " + this.state.responseChange.nickels + " Nickels";
+    }
+    if (this.state.responseChange.pennies == 1) {
+      statement += " 1 Pence";
+    }
+    if (this.state.responseChange.dimes > 1) {
+      statement += " " + this.state.responseChange.pennies + " Pennies";
+    }
+
+    this.setState({changeStatement: statement});
+  }
+
+  makePurchase = (event) => {
+    let id = this.state.itemsData[this.state.itemNumber - 1].id;
+    let price = this.state.itemsData[this.state.itemNumber - 1].price;
+    console.log("id: ", id)
+
+    fetch(SERVICE_URL+'/money/'+this.state.deposit+'/item/'+id, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        if (data.message) {
+          this.setState({message: data.message});
+          return;
+        }
+        this.setState(prevState => ({
+          deposit: ( prevState.deposit - price ).toFixed(2),
+          message:  'Thank You!!!',
+          responseChange: data
+        }), () => console.log(this.state));
+
+        this.loadContactData();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
   }
 
   getItemNumber = (event) => {
@@ -52,8 +118,7 @@ class App extends React.Component {
     }), () => console.log(this.state));
   }
 
-  componentDidMount() {
-    console.log("App is now mounted.")
+  loadContactData() {
     this.setState({ loading: true })
     console.log("Loading items' data")
     fetch(SERVICE_URL + "/items")
@@ -61,6 +126,12 @@ class App extends React.Component {
       .then(data => this.setState(
         { itemsData: data, loading: false }
       ))
+  }
+
+  componentDidMount() {
+    console.log("App is now mounted.")
+    console.log("Loading items' data")
+    this.loadContactData();
   }
 
   render() {
@@ -87,13 +158,18 @@ class App extends React.Component {
             <hr />
             <Row>
               <Col>
-                <MessageForm itemNumber={this.state.itemNumber} />
+                <MessageForm 
+                itemNumber={this.state.itemNumber} 
+                makePurchase={this.makePurchase}
+                message={this.state.message} />
               </Col>
             </Row>
             <hr />
             <Row>
               <Col>
-                <PayBackForm />
+                <PayBackForm
+                changeStatement={this.state.changeStatement}
+                giveChange={this.giveChange} />
               </Col>
             </Row>
           </Col>

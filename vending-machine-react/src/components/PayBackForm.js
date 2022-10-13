@@ -10,12 +10,13 @@ class PayBackForm extends React.Component {
     }
 
     render() {
+        let { changeStatement, giveChange } = this.props;
         return (
             <Form>
                 <h4 className="text-center">Change</h4>
-                <div className="text-center">{this.props.change}</div>
+                <div className="text-center">{changeStatement}</div>
                 <div className="text-center">
-                    <Button variant="primary">
+                    <Button onClick={giveChange} variant="primary">
                         Change Return
                     </Button>
                 </div>
