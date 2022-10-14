@@ -22,7 +22,7 @@ class App extends React.Component {
         "quantity": 10 
       }],
     deposit: (0).toFixed(2),
-    itemNumber: 0,
+    itemNumber: null,
     message: "",
     responseChange: {
       quarters: 0,
@@ -33,7 +33,15 @@ class App extends React.Component {
     changeStatement: ""
   }
 
-  giveChange = (event) => {
+  returnChange = (event) => {
+    this.setState({
+      deposit: (0).toFixed(2),
+      changeStatement: ""
+    });
+  }
+
+  accordChange = () => {
+    console.log("Hi1 ", this.state.responseChange);
     let statement = "";
     if (this.state.responseChange.quarters == 1) {
       statement += "1 Quarter";
@@ -60,10 +68,22 @@ class App extends React.Component {
       statement += " " + this.state.responseChange.pennies + " Pennies";
     }
 
-    this.setState({changeStatement: statement});
+    console.log("statement ", statement);
+
+    // return statement;
+
+    this.setState({
+      changeStatement: statement
+    });
+    
   }
 
   makePurchase = (event) => {
+    if (!this.state.itemNumber) {
+      this.setState({message: "Please make a selection"});
+      this.loadItemsData();
+      return;
+    }
     let id = this.state.itemsData[this.state.itemNumber - 1].id;
     let price = this.state.itemsData[this.state.itemNumber - 1].price;
     console.log("id: ", id)
@@ -78,13 +98,31 @@ class App extends React.Component {
           this.setState({message: data.message});
           return;
         }
+        console.log("res ch1:", this.state.responseChange);
+        console.log("data1: ", data);
+        // this.setState({
+        //   deposit:( this.state.deposit - price ).toFixed(2),
+        //   message:  'Thank You!!!',
+        //   responseChange: data
+        // })
+
+        
         this.setState(prevState => ({
           deposit: ( prevState.deposit - price ).toFixed(2),
           message:  'Thank You!!!',
           responseChange: data
-        }), () => console.log(this.state));
+        }), () => {
+          console.log("res ch is: ", this.state.responseChange);
+          this.accordChange();
+        });
 
-        this.loadContactData();
+        console.log("data2: ", data);
+
+        console.log("res ch2:", this.state.responseChange);
+
+        // this.accordChange();
+
+        this.loadItemsData();
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -118,7 +156,7 @@ class App extends React.Component {
     }), () => console.log(this.state));
   }
 
-  loadContactData() {
+  loadItemsData() {
     this.setState({ loading: true })
     console.log("Loading items' data")
     fetch(SERVICE_URL + "/items")
@@ -131,7 +169,7 @@ class App extends React.Component {
   componentDidMount() {
     console.log("App is now mounted.")
     console.log("Loading items' data")
-    this.loadContactData();
+    this.loadItemsData();
   }
 
   render() {
@@ -168,8 +206,9 @@ class App extends React.Component {
             <Row>
               <Col>
                 <PayBackForm
+                // accordChange={this.accordChange}
                 changeStatement={this.state.changeStatement}
-                giveChange={this.giveChange} />
+                returnChange={this.returnChange} />
               </Col>
             </Row>
           </Col>
