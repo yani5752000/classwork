@@ -36,12 +36,15 @@ class App extends React.Component {
   returnChange = (event) => {
     this.setState({
       deposit: (0).toFixed(2),
-      changeStatement: ""
+      changeStatement: "",
+      message: "",
+      itemNumber: null
     });
+
+    this.loadItemsData();
   }
 
   accordChange = () => {
-    console.log("Hi1 ", this.state.responseChange);
     let statement = "";
     if (this.state.responseChange.quarters == 1) {
       statement += "1 Quarter";
@@ -49,11 +52,24 @@ class App extends React.Component {
     if (this.state.responseChange.quarters > 1) {
       statement += this.state.responseChange.quarters + " Quarters";
     }
+    if (this.state.responseChange.quarters >= 1 && (
+      this.state.responseChange.dimess >= 1 ||
+      this.state.responseChange.nickels >= 1 ||
+      this.state.responseChange.pennies >= 1
+    )) {
+      statement += ","
+    }
     if (this.state.responseChange.dimes == 1) {
       statement += " 1 Dime";
     }
     if (this.state.responseChange.dimes > 1) {
       statement += " " + this.state.responseChange.dimes + " Dimes";
+    }
+    if (this.state.responseChange.dimes >= 1 && (
+      this.state.responseChange.nickels >= 1 ||
+      this.state.responseChange.pennies >= 1
+    )) {
+      statement += ","
     }
     if (this.state.responseChange.nickels == 1) {
       statement += " 1 Nickel";
@@ -61,16 +77,16 @@ class App extends React.Component {
     if (this.state.responseChange.nickels > 1) {
       statement += " " + this.state.responseChange.nickels + " Nickels";
     }
+    if (this.state.responseChange.nickels >= 1 && 
+      this.state.responseChange.penniess >= 1) {
+      statement += ","
+    }
     if (this.state.responseChange.pennies == 1) {
       statement += " 1 Pence";
     }
-    if (this.state.responseChange.dimes > 1) {
+    if (this.state.responseChange.pennies > 1) {
       statement += " " + this.state.responseChange.pennies + " Pennies";
     }
-
-    console.log("statement ", statement);
-
-    // return statement;
 
     this.setState({
       changeStatement: statement
@@ -96,31 +112,17 @@ class App extends React.Component {
         console.log('Success:', data);
         if (data.message) {
           this.setState({message: data.message});
+          this.loadItemsData();
           return;
         }
-        console.log("res ch1:", this.state.responseChange);
-        console.log("data1: ", data);
-        // this.setState({
-        //   deposit:( this.state.deposit - price ).toFixed(2),
-        //   message:  'Thank You!!!',
-        //   responseChange: data
-        // })
-
-        
         this.setState(prevState => ({
           deposit: ( prevState.deposit - price ).toFixed(2),
           message:  'Thank You!!!',
+          itemNumber: null,
           responseChange: data
         }), () => {
-          console.log("res ch is: ", this.state.responseChange);
           this.accordChange();
         });
-
-        console.log("data2: ", data);
-
-        console.log("res ch2:", this.state.responseChange);
-
-        // this.accordChange();
 
         this.loadItemsData();
     })
