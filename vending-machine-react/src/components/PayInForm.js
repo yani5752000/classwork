@@ -18,21 +18,47 @@ class PayInForm extends React.Component {
         return (
             <Form>
                 <h4 className="text-center">Total $ In</h4>
-                <div className="text-center">{deposit}</div>
+                <div className="text-center square border border-secondary">{deposit}</div>
+                {/* <Container>
+                    <Row>
+                        <Col>
+                            <Button variant="outline-secondary" name="dollar" onClick={addToDeposit}>
+                                Add Dollar
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button variant="outline-secondary" name="quarter" onClick={addToDeposit}>
+                                Add Quarter
+                            </Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button variant="outline-secondary" name="dime" onClick={addToDeposit}>
+                                Add Dime
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button variant="outline-secondary" name="nickle" onClick={addToDeposit}>
+                                Add Nickle
+                            </Button>
+                        </Col>
+                    </Row>
+                </Container> */}
                 <div className="text-center">
-                  <Button variant="primary" name="dollar" onClick={addToDeposit}>
+                  <Button variant="outline-secondary" name="dollar" onClick={addToDeposit}>
                       Add Dollar
                   </Button>
-                  <Button variant="primary" name="quarter" onClick={addToDeposit}>
+                  <Button variant="outline-secondary" name="quarter" onClick={addToDeposit}>
                       Add Quarter
                   </Button>
                 </div>
-                <br />
+                {/* <br /> */}
                 <div className="text-center">
-                  <Button variant="primary" name="dime" onClick={addToDeposit}>
+                  <Button variant="outline-secondary" name="dime" onClick={addToDeposit}>
                       Add Dime
                   </Button>
-                  <Button variant="primary" name="nickle" onClick={addToDeposit}>
+                  <Button variant="outline-secondary" name="nickle" onClick={addToDeposit}>
                       Add Nickle
                   </Button>    
                 </div>

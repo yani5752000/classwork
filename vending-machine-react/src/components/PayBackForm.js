@@ -14,9 +14,9 @@ class PayBackForm extends React.Component {
         return (
             <Form>
                 <h4 className="text-center">Change</h4>
-                <div className="text-center">{changeStatement}</div>
+                <div className="text-center square border border-secondary" style={{height: "40px"}}>{changeStatement}</div>
                 <div className="text-center">
-                    <Button onClick={returnChange} variant="primary">
+                    <Button onClick={returnChange} variant="outline-secondary">
                         Change Return
                     </Button>
                 </div>
