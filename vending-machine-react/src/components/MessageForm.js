@@ -11,6 +11,7 @@ class MessageForm extends React.Component {
     }
 
     render() {
+        //the props
         let { itemNumber, makePurchase, message } = this.props;
         return (
             <Form>
