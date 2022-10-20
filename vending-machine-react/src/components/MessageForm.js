@@ -16,8 +16,6 @@ class MessageForm extends React.Component {
         return (
             <Form>
                 <h4 className="text-center">Messages</h4>
-                <div className="text-center square border border-secondary" style={{height: "40px"}}>{message}</div>
-                {/* <h4 className="text-center">Item: {itemNumber}</h4> */}
                 <Row>
                     <Col sm={4}  className="text-right">Item: </Col>
                     <Col sm={8} className='row'>
