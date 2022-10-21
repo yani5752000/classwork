@@ -208,7 +208,6 @@ class App extends React.Component {
             <Row>
               <Col>
                 <PayBackForm
-                // accordChange={this.accordChange}
                 changeStatement={this.state.changeStatement}
                 returnChange={this.returnChange} />
               </Col>
