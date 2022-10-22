@@ -5,10 +5,6 @@ import Row from 'react-bootstrap/Row';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-// function Inventory (){
-//   return <h1>Inventory</h1>
-// }
-
 class Inventory extends React.Component {
 
     // this static property will initialize a prop with data
