@@ -19,32 +19,6 @@ class PayInForm extends React.Component {
             <Form>
                 <h4 className="text-center">Total $ In</h4>
                 <div className="text-center square border border-secondary">{deposit}</div>
-                {/* <Container>
-                    <Row>
-                        <Col>
-                            <Button variant="outline-secondary" name="dollar" onClick={addToDeposit}>
-                                Add Dollar
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button variant="outline-secondary" name="quarter" onClick={addToDeposit}>
-                                Add Quarter
-                            </Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Button variant="outline-secondary" name="dime" onClick={addToDeposit}>
-                                Add Dime
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button variant="outline-secondary" name="nickle" onClick={addToDeposit}>
-                                Add Nickle
-                            </Button>
-                        </Col>
-                    </Row>
-                </Container> */}
                 <div className="text-center">
                   <Button variant="outline-secondary" name="dollar" onClick={addToDeposit}>
                       Add Dollar
