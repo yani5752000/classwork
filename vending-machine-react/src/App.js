@@ -168,6 +168,7 @@ class App extends React.Component {
       ))
   }
 
+  //this function loads items on the page on start up
   componentDidMount() {
     console.log("App is now mounted.")
     console.log("Loading items' data")
