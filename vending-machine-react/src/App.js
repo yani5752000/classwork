@@ -157,7 +157,7 @@ class App extends React.Component {
       deposit: (( prevState.deposit * 100 + inputValue ) / 100).toFixed(2)
     }), () => console.log(this.state));
   }
-
+  //loads the items on the page
   loadItemsData() {
     this.setState({ loading: true })
     console.log("Loading items' data")
