@@ -10,7 +10,7 @@ package com.mycompany.threadexample;
  * @author asadp
  */
 class RunnableDemo implements Runnable {
-   private Thread t;
+   //private Thread t;
    private String threadName;
    
    RunnableDemo( String name) {
@@ -34,9 +34,11 @@ class RunnableDemo implements Runnable {
    
    public void start () {
       System.out.println("Starting " +  threadName );
-      if (t == null) {
-         t = new Thread (this, threadName);
+//      if (t == null) {
+//         t = new Thread (this, threadName);
+//         t.start ();
+//      }
+    Thread t = new Thread (this, threadName);
          t.start ();
-      }
    }
 }

@@ -161,6 +161,7 @@ class App extends React.Component {
   loadItemsData() {
     this.setState({ loading: true })
     console.log("Loading items' data")
+    //send a GET request to web server to fetch the items
     fetch(SERVICE_URL + "/items")
       .then(data => data.json())
       .then(data => this.setState(
