@@ -74,6 +74,7 @@ class Inventory extends React.Component {
         console.log("Rendering Items' Cards:")
         console.log(this.props.items)
         return (
+          //display the items in rows of three each
             <Row xs={1} md={3} className="g-4">
       {this.props.items.map((item, index) => (
         <Col>
