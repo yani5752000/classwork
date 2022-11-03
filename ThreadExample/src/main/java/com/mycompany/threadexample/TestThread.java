@@ -5,6 +5,8 @@
  */
 package com.mycompany.threadexample;
 
+import static com.mycompany.threadexample.RunnableDemo.printPrimes;
+
 /**
  *
  * @author asadp
@@ -12,10 +14,12 @@ package com.mycompany.threadexample;
 public class TestThread {
 
    public static void main(String args[]) {
-      RunnableDemo R1 = new RunnableDemo( "Thread-1");
+      //printPrimes(50);
+       
+      RunnableDemo R1 = new RunnableDemo( "Thread-1", 50);
       R1.start();
       
-      RunnableDemo R2 = new RunnableDemo( "Thread-2");
-      R2.start();
+//      RunnableDemo R2 = new RunnableDemo( "Thread-2", 200);
+//      R2.start();
    }   
 }
