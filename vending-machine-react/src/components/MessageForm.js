@@ -28,6 +28,7 @@ class MessageForm extends React.Component {
                     </Col>
                 </Row>
                 
+                {/* the button for purchasing */}
                 <div className="text-center">
                     <Button variant="outline-secondary" onClick={makePurchase} >
                         Make Purchase
