@@ -15,6 +15,7 @@ class MessageForm extends React.Component {
         let { itemNumber, makePurchase, message } = this.props;
         return (
             <Form>
+                {/* the message displayed by the app */}
                 <h4 className="text-center">Messages</h4>
                 <div className="text-center square border border-secondary" style={{height: "40px"}}>
                             {message}
