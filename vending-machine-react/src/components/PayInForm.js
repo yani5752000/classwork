@@ -14,7 +14,7 @@ class PayInForm extends React.Component {
     }
 
     render() {
-        //now first getting in the props coming from App.js
+        //now first we get the props coming from App.js
         let {deposit, addToDeposit} = this.props;
         return (
             //here is the form for paying in
