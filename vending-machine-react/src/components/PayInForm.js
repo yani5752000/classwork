@@ -24,7 +24,7 @@ class PayInForm extends React.Component {
                 
                 <div className="text-center square border border-secondary">{deposit}</div>
                 <div className="text-center">
-                    {/* the button for depositing one dollar */}
+                    {/* and the button for depositing one dollar */}
                   <Button variant="outline-secondary" name="dollar" onClick={addToDeposit}>
                       Add Dollar
                   </Button>
