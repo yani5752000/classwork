@@ -19,7 +19,7 @@ class PayInForm extends React.Component {
         return (
             //and here is the form for paying in
             <Form>
-                {/* first displaying the total amount deposited */}
+                {/* first displaying the total amount being deposited */}
                 <h4 className="text-center">Total $ In</h4>
                 
                 <div className="text-center square border border-secondary">{deposit}</div>
