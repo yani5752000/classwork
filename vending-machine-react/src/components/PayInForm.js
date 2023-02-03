@@ -17,7 +17,7 @@ class PayInForm extends React.Component {
         //and now first we will get in the props which are coming from OUR App.js
         let {deposit, addToDeposit} = this.props;
         return (
-            //and here is the form which we can use for paying in
+            //and here is the form which we can use for paying in the money
             <Form>
                 {/* first we will be displaying the total amount being deposited */}
                 <h4 className="text-center">Total $ In</h4>
