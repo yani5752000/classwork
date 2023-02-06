@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const SERVICE_URL = "http://vending.us-east-1.elasticbeanstalk.com/"
 
 class App extends React.Component {
-
+//the state
   state = {
     loading: false,
     itemsData: [
