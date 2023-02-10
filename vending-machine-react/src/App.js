@@ -93,7 +93,7 @@ class App extends React.Component {
     });
     
   }
-//the function for purchasing items
+//this is the function for purchasing items
   makePurchase = (event) => {
     if (!this.state.itemNumber) {
       this.setState({message: "Please make a selection"});
