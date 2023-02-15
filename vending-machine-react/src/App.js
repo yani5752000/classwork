@@ -102,7 +102,7 @@ class App extends React.Component {
     }
     let id = this.state.itemsData[this.state.itemNumber - 1].id;
     let price = this.state.itemsData[this.state.itemNumber - 1].price;
-    //here we post
+    //here we post 
     fetch(SERVICE_URL+'/money/'+this.state.deposit+'/item/'+id, {
         method: 'POST'
     })
@@ -111,6 +111,7 @@ class App extends React.Component {
         console.log('Success:', data);
         if (data.message) {
           this.setState({message: data.message});
+          //here we load the page
           this.loadItemsData();
           return;
         }
