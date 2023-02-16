@@ -102,7 +102,7 @@ class App extends React.Component {
     }
     let id = this.state.itemsData[this.state.itemNumber - 1].id;
     let price = this.state.itemsData[this.state.itemNumber - 1].price;
-    //here we post 
+    //here we post the data
     fetch(SERVICE_URL+'/money/'+this.state.deposit+'/item/'+id, {
         method: 'POST'
     })
