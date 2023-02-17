@@ -111,7 +111,7 @@ class App extends React.Component {
         console.log('Success:', data);
         if (data.message) {
           this.setState({message: data.message});
-          //here we load the page
+          //here we reload the page
           this.loadItemsData();
           return;
         }
