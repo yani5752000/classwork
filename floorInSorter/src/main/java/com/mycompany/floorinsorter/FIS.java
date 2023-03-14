@@ -10,7 +10,9 @@ package com.mycompany.floorinsorter;
  * @author asadp
  */
 public class FIS {
-    public int fIS(int x,int arr[], int r, int l){
+    public int fIS(int x,int arr[], int l, int r){
+        if(x < arr[l])
+            return -1;
         if (r >= l) {
             int mid = l + (r - l) / 2;
 
@@ -18,10 +20,10 @@ public class FIS {
                 return mid;
 
             if (arr[mid] > x)
-                return binarySearch(arr,l,mid - 1,x);
+            return fIS(x, arr, l, mid - 1);
 
             // Else the element can only be present in right subarray
-            return binarySearch(arr,mid + 1,r,x);
+            return fIS(x, arr, mid + 1, r);
         }
 
 // We reach here when element is not present in array
