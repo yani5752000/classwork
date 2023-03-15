@@ -15,18 +15,31 @@ public class FIS {
             return -1;
         if (r >= l) {
             int mid = l + (r - l) / 2;
+            System.out.println("mid " + mid);
 
             if (arr[mid] == x)
-                return mid;
-
+                return arr[mid];
+            if (l == r && arr[l] < x)
+                return arr[l];
+            if (l == r - 1 && arr[l] < x && arr[r] > x)
+                return arr[l];
+            if (l == r - 1 && arr[l] < x && arr[r] < x)
+                return arr[r];
             if (arr[mid] > x)
-            return fIS(x, arr, l, mid - 1);
+            return fIS(x, arr, l, mid);
 
             // Else the element can only be present in right subarray
-            return fIS(x, arr, mid + 1, r);
+            return fIS(x, arr, mid, r);
         }
 
-// We reach here when element is not present in array
-return -1;
+        // We reach here when element is not present in array
+        return -1;
+    }
+    
+    public static void main(String args[]){
+        FIS f = new FIS();
+        int arr[] = {1,2,8,10,10,12,19};
+        int x = 0;
+        System.out.println("it is " + f.fIS(x, arr, 0, 6));
     }
 }
