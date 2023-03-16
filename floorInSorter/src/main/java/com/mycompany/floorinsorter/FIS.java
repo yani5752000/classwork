@@ -38,8 +38,8 @@ public class FIS {
     
     public static void main(String args[]){
         FIS f = new FIS();
-        int arr[] = {1,2,8,10,10,12,19};
-        int x = 0;
-        System.out.println("it is " + f.fIS(x, arr, 0, 6));
+        int arr[] = {1,2,3,5,6,8,9,10};
+        int x = 7;
+        System.out.println("it is " + f.fIS(x, arr, 0, 7));
     }
 }
