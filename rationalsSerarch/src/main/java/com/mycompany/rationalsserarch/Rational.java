@@ -23,7 +23,7 @@ public class Rational {
     static boolean lessThan(Rational x, Rational y){
         return x.a * y.b < x.b * y.a;
     }
-    
+    //binary serach in an array of rational numbers
     static int binarySearch(Rational arr[],int l,int r,Rational x)
     {
         if (r >= l) {
