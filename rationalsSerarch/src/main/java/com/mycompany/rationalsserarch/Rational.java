@@ -11,6 +11,7 @@ package com.mycompany.rationalsserarch;
  */
 public class Rational {
     public int a, b;
+    //the constructor
     public Rational(int a, int b){
         this.a = a;
         this.b = b;
