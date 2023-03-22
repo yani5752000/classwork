@@ -16,7 +16,7 @@ public class Rational {
         this.a = a;
         this.b = b;
     }
-    
+    //method for defining equlity of two rationals
     static boolean eq(Rational x, Rational y){
         return x.a * y.b == x.b * y.a;
     }
