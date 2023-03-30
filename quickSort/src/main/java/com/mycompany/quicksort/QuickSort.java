@@ -30,7 +30,7 @@ public class QuickSort {
        A[i - 1] = temp;  //put the pivot element in its proper place.
        return i-1;                      //return the position of the pivot
     }
-    //using this method accelerates the sorting process
+    //using this method accelerates the sorting process (makes it more efficient)
     public static int rand_partition ( int A[ ] , int start , int end ) {
         //chooses position of pivot randomly by using rand() function .
          int random = start + (int) (Math.random() * (end - start +1));
