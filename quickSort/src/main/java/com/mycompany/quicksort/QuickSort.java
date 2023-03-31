@@ -13,6 +13,7 @@ import java.lang.Math;
 public class QuickSort {
     public static int partition ( int A[],int start ,int end) {
         int i = start + 1;
+        //the pivot number
         int piv = A[start] ;            //make the first element as pivot element.
         for(int j =start + 1; j <= end ; j++ )  {
         /*rearrange the array by putting elements which are less than pivot
