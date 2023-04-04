@@ -58,7 +58,7 @@ class BinaryTree {
           System.out.println("item is nulllll ");
           root = new Node(number);
           System.out.println("insert");
-          System.out.println("now item ia " + root.item);
+          System.out.println("now item is " + root.item);
           return;
       }
       else if(number == node.item){
@@ -86,13 +86,43 @@ class BinaryTree {
       }
   }
   
-  int bSearch(int number){
+  void bDelete(int number){
+      Node node = bSearch(number);
+      if (node == null){
+          System.out.println("No such number there to delete");
+          return;
+      }
+      if(node.right == null && node.left == null){
+          
+      }
+  }
+  
+  Node bSearch(int number){
       if(root == null){
-          return -1;
+          return null;
       }
       if(number == root.item){
-          return this.root.item;
+          return this.root;
       }
+      if(number > root.item){
+          BinaryTree b = new BinaryTree();
+          b.root = this.root.right;
+          return b.bSearch(number);
+      }
+      else{
+          BinaryTree b = new BinaryTree();
+          b.root = this.root.left;
+          return b.bSearch(number);
+      }
+  }
+  Node bSearchParent(int number){
+      if(root == null){
+          return null;
+      }
+      if(number == root.item){
+          return null;
+      }
+      Node parent = root;
       if(number > root.item){
           BinaryTree b = new BinaryTree();
           b.root = this.root.right;
@@ -123,7 +153,7 @@ class BinaryTree {
   tree.postorder(tree.root);
   
       System.out.println("\nsearch for 9");
-      System.out.println(tree.bSearch(9));
+      System.out.println(tree.bSearch(9).item);
       
       System.out.println("\nsearch for 10");
       System.out.println(tree.bSearch(10));
@@ -141,10 +171,10 @@ class BinaryTree {
       tree.postorder(tree.root);
       
       System.out.println("\nsearch for 9");
-      System.out.println(tree.bSearch(9));
+      System.out.println(tree.bSearch(9).item);
       
       System.out.println("\nsearch for 10");
-      System.out.println(tree.bSearch(10));
+      System.out.println(tree.bSearch(10).item);
       
       System.out.println("\nsearch for 100");
       System.out.println(tree.bSearch(100));
