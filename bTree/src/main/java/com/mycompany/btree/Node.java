@@ -17,4 +17,8 @@ class Node {
   item = key;
   left = right = null;
   }
+  
+  public boolean hasInChild(int number){
+      return this.left.item == number || this.right.item == number;
+  }
 }

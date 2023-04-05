@@ -93,7 +93,19 @@ class BinaryTree {
           return;
       }
       if(node.right == null && node.left == null){
-          
+          if(node == root){
+              root = null;
+              return;
+          }
+          Node parent = bSearchParent(number);
+          if(node == parent.left){
+              parent.left = null;
+              return;
+          }
+          if(node == parent.right){
+              parent.right = null;
+              return;
+          }
       }
   }
   
@@ -119,19 +131,28 @@ class BinaryTree {
       if(root == null){
           return null;
       }
-      if(number == root.item){
+      if(root.item == number){
           return null;
       }
-      Node parent = root;
+      if(number > root.item && root.right == null){
+          return null;
+      }
+      if(number < root.item && root.left == null){
+          return null;
+      }
+      if(root.hasInChild(number)) {
+          return root;
+      }
+      
       if(number > root.item){
           BinaryTree b = new BinaryTree();
           b.root = this.root.right;
-          return b.bSearch(number);
+          return b.bSearchParent(number);
       }
       else{
           BinaryTree b = new BinaryTree();
           b.root = this.root.left;
-          return b.bSearch(number);
+          return b.bSearchParent(number);
       }
   }
 
@@ -178,5 +199,9 @@ class BinaryTree {
       
       System.out.println("\nsearch for 100");
       System.out.println(tree.bSearch(100));
+      
+      System.out.println("search for parent of 21");
+      
+      System.out.println(tree.bSearchParent(2));
   }
 }
