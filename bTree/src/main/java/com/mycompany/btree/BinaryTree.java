@@ -107,6 +107,62 @@ class BinaryTree {
               return;
           }
       }
+      if(node.right == null && node.left != null){
+          if(node == root){
+              root = node.left;
+              return;
+          }
+          Node parent = bSearchParent(number);
+          if(node == parent.left){
+              parent.left = node.left;
+              return;
+          }
+          if(node == parent.right){
+              parent.right = node.left;
+              return;
+          }
+      }
+      if(node.right != null && node.left == null){
+          if(node == root){
+              root = node.right;
+              return;
+          }
+          Node parent = bSearchParent(number);
+          if(node == parent.left){
+              parent.left = node.right;
+              return;
+          }
+          if(node == parent.right){
+              parent.right = node.right;
+              return;
+          }
+      }
+      if(node == root){
+          Node node1 = new Node(root.right.item);
+          node1.left = root.left;
+          BinaryTree b = new BinaryTree();
+          b.root = root.right;
+          b.bDelete(root.right.item);
+          node1.right = b.root;
+          root = node1;
+          return;
+      }
+      else {
+          Node node1 = new Node(node.right.item);
+          Node parent = this.bSearchParent(node.item);
+          if(node == parent.left){
+              parent.left = node1;
+          }
+          else {
+              parent.right = node1;
+          }
+          node1.left = node.left;
+          BinaryTree b = new BinaryTree();
+          b.root = node.right;
+          b.bDelete(b.root.item);
+          node1.right = b.root;
+          return;
+      }
   }
   
   Node bSearch(int number){
@@ -203,5 +259,10 @@ class BinaryTree {
       System.out.println("search for parent of 21");
       
       System.out.println(tree.bSearchParent(2));
+      
+      tree.bDelete(13);
+      System.out.println("preorder traversal");
+      tree.preorder(tree.root);
+      
   }
 }

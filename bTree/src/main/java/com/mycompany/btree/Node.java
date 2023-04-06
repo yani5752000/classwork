@@ -19,6 +19,15 @@ class Node {
   }
   
   public boolean hasInChild(int number){
+      if(this.left == null && this.right == null){
+          return false;
+      }
+      if(this.left != null && this.right == null){
+          return this.left.item == number;
+      }
+      if(this.left == null && this.right != null){
+          return this.right.item == number;
+      }
       return this.left.item == number || this.right.item == number;
   }
 }
