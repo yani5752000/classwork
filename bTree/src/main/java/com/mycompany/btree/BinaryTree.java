@@ -260,7 +260,7 @@ class BinaryTree {
       
       System.out.println(tree.bSearchParent(2));
       
-      tree.bDelete(13);
+      tree.bDelete(15);
       System.out.println("preorder traversal");
       tree.preorder(tree.root);
       
