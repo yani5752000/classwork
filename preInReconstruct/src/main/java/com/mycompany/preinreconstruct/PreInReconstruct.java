@@ -45,40 +45,33 @@ public class PreInReconstruct {
                 break;
             }
         }
-        System.out.println("index: " + index);
         int inOrderLeft[] = new int[index];
         int inOrderRight[] = new int[inOrder.length - index -1];
         for(int i = 0; i < index; i++){
             inOrderLeft[i] = inOrder[i];
-            System.out.print(inOrderLeft[i] + " ");
          }
         System.out.println("");
         for(int i = 0; i < inOrder.length - index -1; i++){
             inOrderRight[i] = inOrder[i + index + 1];
-            System.out.print(inOrderRight[i] + " ");
          }
         System.out.println("");
         int preOrderLeft[] = new int[index];
         int preOrderRight[] = new int[inOrder.length - index -1];
         for(int i = 0; i < index; i++){
             preOrderLeft[i] = preOrder[i + 1];
-            System.out.print(preOrderLeft[i] + " ");
          }
         System.out.println("");
         for(int i = 0; i < inOrder.length - index -1; i++){
             preOrderRight[i] = preOrder[i + index + 1];
-            System.out.print(preOrderRight[i] + " ");
          }
         System.out.println("");
         if(preOrderLeft.length > 0){
             Node left = treeNodeForItem(preOrderLeft[0]);
             root.left = left;
-            System.out.println("left: " + left.item);
         }
         if(preOrderRight.length > 0){
             Node right = treeNodeForItem(preOrderRight[0]);
             root.right = right;
-            System.out.println("right: " + right.item);
         }
         
         preInReconstruct(preOrderLeft, inOrderLeft);
@@ -93,8 +86,8 @@ public class PreInReconstruct {
     }
     public static void main(String[] args) {
         PreInReconstruct pIR = new PreInReconstruct();
-        int preOrder[] = {-1};
-        int inOrder[] = {-1};
+        int preOrder[] = {3,9,20,15,7};
+        int inOrder[] = {9,3,15,20,7};
         pIR.preInReconstruct(preOrder, inOrder);
         pIR.printTreeNodes();
     }
