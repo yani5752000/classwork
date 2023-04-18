@@ -52,24 +52,45 @@ public class AVL {
                 root.left = left;
                 root.balance++;
                 return;
-            }else if(number < root.left.item) {
+            }else if(number < root.right.item) {
                 Node left = new Node(root.item);
                 left.balance = 0;
                 root.left = left;
                 root.item = number;
                 root.balance++;
+                return;
+            } else {
+                Node left = new Node(root.item);
+                left.balance = 0;
+                root.left = left;
+                root.item = root.right.item;
+                root.balance++;
+                root.right.item = number;
+                return;
             }
         }
-        if(number < root.item){
-            if(root.height <= 0){
-                AVL a = new AVL();
-                a.root = root.left;
-                a.insert(number);
-            }
-            if(root.height > 0){
-                AVL a = new AVL();
-                a.root = root.right;
-                a.insert(number);
+        if(root.right == null){
+            if(number > root.item ){
+                Node right = new Node(number);
+                right.balance = 0;
+                root.right = right;
+                root.balance--;
+                return;
+            }else if(number > root.left.item) {
+                Node right = new Node(root.item);
+                right.balance = 0;
+                root.right = right;
+                root.item = number;
+                root.balance--;
+                return;
+            } else {
+                Node right = new Node(root.item);
+                right.balance = 0;
+                root.right = right;
+                root.item = root.left.item;
+                root.balance--;
+                root.left.item = number;
+                return;
             }
         }
     }
