@@ -93,5 +93,11 @@ public class AVL {
                 return;
             }
         }
+        if(root.balance == 0 && number > root.item){
+            AVL a = new AVL();
+            a.root = root.right;
+            a.insert(number);
+            
+        }
     }
 }
