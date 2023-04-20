@@ -13,21 +13,27 @@ public class AVL {
     Node root;
     class Node{
         int item;
-        int balance;
+        int height;
         Node left, right;
         
         public Node(int key){
             item = key;
-            balance = 0;
+            height = 0;
             left = null;
             right = null;
+        }
+        
+        int balance(){
+            if(height == 0){
+                return 0;
+            }
+            return left.height - right.height;
         }
     }
     
     void insert(int number){
         if(root == null){
             root = new Node(number);
-            root.balance = 0;
             return;
         }
         if(root.left == null && root.right == null){
@@ -35,33 +41,31 @@ public class AVL {
                 Node left = new Node(number);
                 left.balance = 0;
                 root.left = left;
-                root.balance = 1;
+                root.balance++;
+                root.height++;
                 return;
             } else {
                 Node right = new Node(number);
-                right.balance = 0;
                 root.right = right;
                 root.balance = -1;
+                root.height++;
                 return;
             }
         }
-        if(root.left == null){
+        if(root.left == null && root.right.right == null && root.right.left == null){
             if(number < root.item ){
                 Node left = new Node(number);
-                left.balance = 0;
                 root.left = left;
                 root.balance++;
                 return;
             }else if(number < root.right.item) {
                 Node left = new Node(root.item);
-                left.balance = 0;
                 root.left = left;
                 root.item = number;
                 root.balance++;
                 return;
             } else {
                 Node left = new Node(root.item);
-                left.balance = 0;
                 root.left = left;
                 root.item = root.right.item;
                 root.balance++;
@@ -69,16 +73,14 @@ public class AVL {
                 return;
             }
         }
-        if(root.right == null){
+        if(root.right == null && root.left.left == null && root.left.right == null){
             if(number > root.item ){
                 Node right = new Node(number);
-                right.balance = 0;
                 root.right = right;
                 root.balance--;
                 return;
             }else if(number > root.left.item) {
                 Node right = new Node(root.item);
-                right.balance = 0;
                 root.right = right;
                 root.item = number;
                 root.balance--;
