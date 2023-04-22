@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.mycompany.avl;
+import java. util. ArrayList;
 
 /**
  *
@@ -114,12 +115,34 @@ public class AVL {
                 AVL a = new AVL();
                 a.root = root.left;
                 a.insert(number);
-            }else if(number < root.right.item){
-                int temp = root.item;
-                root.item = number;
-                AVL a = new AVL();
-                a.root = root.left;
-                a.insert(temp);
+            }else {
+                ArrayList<Node> nodes = new ArrayList();
+                nodes.add(root);
+                Node end = root.right;
+                nodes.add(end);
+                while(end != null){
+                    if(number < end.item){
+                        end = end.left;
+                    }else{
+                        end = end.right;
+                    }
+                    nodes.add(end);
+                }
+                AVL al = new AVL();
+                al.root = root.left;
+                al.insert(root.item);
+                Node first = root;
+                for(Node node : nodes){
+                    if(node == root){
+                        continue;
+                    }
+                    if(node == null){
+                        first.item = number;
+                    }else{
+                        first.item = node.item;
+                    }
+                    first = node;
+                }
             }
         }
     }
