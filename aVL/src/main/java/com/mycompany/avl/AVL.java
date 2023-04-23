@@ -144,6 +144,41 @@ public class AVL {
                     first = node;
                 }
             }
+            //the case for root.balance == 1
+        }else {
+            if(number > root.item){
+                AVL a = new AVL();
+                a.root = root.right;
+                a.insert(number);
+            }else {
+                ArrayList<Node> nodes = new ArrayList();
+                nodes.add(root);
+                Node end = root.left;
+                nodes.add(end);
+                while(end != null){
+                    if(number < end.item){
+                        end = end.left;
+                    }else{
+                        end = end.right;
+                    }
+                    nodes.add(end);
+                }
+                AVL al = new AVL();
+                al.root = root.right;
+                al.insert(root.item);
+                Node first = root;
+                for(Node node : nodes){
+                    if(node == root){
+                        continue;
+                    }
+                    if(node == null){
+                        first.item = number;
+                    }else{
+                        first.item = node.item;
+                    }
+                    first = node;
+                }
+            }
         }
     }
 }
