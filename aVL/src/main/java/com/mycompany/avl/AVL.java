@@ -35,21 +35,13 @@ public class AVL {
         }
         
         int balance(){
-            //System.out.println("checking the balance:");
             if(right == null && left == null){
                 return 0;
             }else if(right == null){
-//                System.out.println("left.height: " + left.height());
-//                System.out.println("The BALANCE: " + (1+ left.height()));
                 return (1 + left.height());
             }else if(left ==  null){
-//                System.out.println("right.height: " + right.height());
-//                System.out.println("The BALANCE: " + (-1 -right.height()));
                 return (-1 - right.height());
             }else {
-//                System.out.println("left.height: " + left.height());
-//                System.out.println("right.height: " + right.height());
-//                System.out.println("The BALANCE: " + (left.height() -right.height()));
                 return (left.height() - right.height());
             }
         }
@@ -191,19 +183,19 @@ public class AVL {
     }
     void preOrder(){
         if(root != null){
-            System.out.println("item: " + root.item);  
-            System.out.print("balance: ");
-            System.out.println(root.balance());
-            System.out.println("height: " + root.height());
+            System.out.print("item: " + root.item);  
+            System.out.print(" balance: ");
+            System.out.print(root.balance());
+            System.out.print(" height: " + root.height());
             if(root.left != null){
-                System.out.println("left: " + root.left.item);
+                System.out.print(" left: " + root.left.item);
             }else {
-                System.out.println("left: " + null);
+                System.out.print(" left: " + null);
             }
             if(root.right != null){
-                System.out.println("right: " + root.right.item);
+                System.out.println(" right: " + root.right.item);
             }else {
-                System.out.println("right: " + null);
+                System.out.println(" right: " + null);
             }
             AVL aLeft = new AVL();
             aLeft.root = root.left;
@@ -218,30 +210,53 @@ public class AVL {
         a.insert(8);
         a.preOrder();
         System.out.println("--------------------------------------------");
-        System.out.println("New Insert");
+        System.out.println("New Insert: " + 11);
         a.insert(11);
         a.preOrder();
         System.out.println("--------------------------------------------");
-        System.out.println("New Insert");
+        System.out.println("New Insert: " + 14);
         a.insert(14);
         a.preOrder();
-         System.out.println("--------------------------------------------");
-        System.out.println("New Insert");
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 20);
         a.insert(20);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 25);
         a.insert(25);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 10);
         a.insert(10);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 30);
         a.insert(30);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 27);
         a.insert(27);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 18);
         a.insert(18);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 4);
         a.insert(4);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 3);
         a.insert(3);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 2);
         a.insert(2);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New Insert: " + 1);
         a.insert(1);
         a.preOrder();
-        System.out.println("last");
-        a.root.balance();
-        System.out.println("root balance: ");
-        System.out.println(a.root.balance());
         
     }
 }
