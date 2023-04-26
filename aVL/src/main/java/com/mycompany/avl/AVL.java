@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.mycompany.avl;
-import java. util. ArrayList;
 
 /**
  *
@@ -12,9 +11,14 @@ import java. util. ArrayList;
  */
 public class AVL {
     Node root;
+    public AVL(){
+        this.root = null;
+    }
+    public AVL(Node root){
+        this.root = root;
+    }
     class Node{
         int item;
-        int balance = balance();
         Node left, right;
         
         public Node(int key){
@@ -52,6 +56,7 @@ public class AVL {
             root = new Node(number);
             return;
         }
+        System.out.println("root item is " + root.item);
         if(root.left == null && root.right == null){
             if(number < root.item){
                 Node left = new Node(number);
@@ -99,87 +104,77 @@ public class AVL {
                 return;
             }
         }
-        if(root.balance == 0){
+        if(root.balance() == 0){
             if(number > root.item){
-                AVL a = new AVL();
-                a.root = root.right;
+                AVL a = new AVL(root.right);
                 a.insert(number);
                 return;
             }else {
-                AVL a = new AVL();
-                a.root = root.left;
+                AVL a = new AVL(root.left);
                 a.insert(number);
+                return;
             }
-        } else if(root.balance == -1){
+        } else if(root.balance() == -1){
             if(number < root.item){
-                AVL a = new AVL();
-                a.root = root.left;
+                AVL a = new AVL(root.left);
                 a.insert(number);
+                return;
             }else {
-                ArrayList<Node> nodes = new ArrayList();
-                nodes.add(root);
-                Node end = root.right;
-                nodes.add(end);
-                while(end != null){
-                    if(number < end.item){
-                        end = end.left;
-                    }else{
-                        end = end.right;
-                    }
-                    nodes.add(end);
+                AVL ar = new AVL(root.right);
+                int min = ar.min();
+                if(number < min){
+                    AVL al = new AVL(root.left);
+                    al.insert(root.item);
+                    root.item = number;
+                    return;
                 }
-                AVL al = new AVL();
-                al.root = root.left;
+                ar.delete(min);
+                ar.insert(number);
+                AVL al = new AVL(root.left);
                 al.insert(root.item);
-                Node first = root;
-                for(Node node : nodes){
-                    if(node == root){
-                        continue;
-                    }
-                    if(node == null){
-                        first.item = number;
-                    }else{
-                        first.item = node.item;
-                    }
-                    first = node;
-                }
+                root.item = min;
+                return;
             }
-            //the case for root.balance == 1
+            //the case for root.balance() == 1
         }else {
             if(number > root.item){
-                AVL a = new AVL();
-                a.root = root.right;
+                AVL a = new AVL(root.right);
                 a.insert(number);
+                return;
             }else {
-                ArrayList<Node> nodes = new ArrayList();
-                nodes.add(root);
-                Node end = root.left;
-                nodes.add(end);
-                while(end != null){
-                    if(number < end.item){
-                        end = end.left;
-                    }else{
-                        end = end.right;
-                    }
-                    nodes.add(end);
+                AVL al = new AVL(root.left);
+                int max = al.max();
+                if(number > max){
+                    AVL ar = new AVL(root.right);
+                    ar.insert(root.item);
+                    root.item = number;
+                    return;
                 }
-                AVL al = new AVL();
-                al.root = root.right;
-                al.insert(root.item);
-                Node first = root;
-                for(Node node : nodes){
-                    if(node == root){
-                        continue;
-                    }
-                    if(node == null){
-                        first.item = number;
-                    }else{
-                        first.item = node.item;
-                    }
-                    first = node;
-                }
+                al.delete(max);
+                al.insert(number);
+                AVL ar = new AVL(root.right);
+                ar.insert(root.item);
+                root.item = max;
+                return;
             }
         }
+    }
+    void delete(int number){
+        
+    }
+    int max(){
+        Node temp = root;
+        while(temp.right != null){
+            temp = temp.right;
+        }
+        return temp.item;
+    }
+    int min(){
+        Node temp = root;
+        while(temp.left != null){
+            temp = temp.left;
+        }
+        return temp.item;
     }
     void preOrder(){
         if(root != null){
