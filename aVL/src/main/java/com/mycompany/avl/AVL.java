@@ -56,7 +56,6 @@ public class AVL {
             root = new Node(number);
             return;
         }
-        System.out.println("root item is " + root.item);
         if(root.left == null && root.right == null){
             if(number < root.item){
                 Node left = new Node(number);
@@ -121,19 +120,14 @@ public class AVL {
                 return;
             }else {
                 AVL ar = new AVL(root.right);
-                int min = ar.min();
-                if(number < min){
+                ar.insert(number);
+                while(root.balance() < -1){
                     AVL al = new AVL(root.left);
                     al.insert(root.item);
-                    root.item = number;
-                    return;
+                    int min = ar.min();
+                    root.item = min;
+                    ar.delete(min);
                 }
-                ar.delete(min);
-                ar.insert(number);
-                AVL al = new AVL(root.left);
-                al.insert(root.item);
-                root.item = min;
-                return;
             }
             //the case for root.balance() == 1
         }else {
@@ -143,24 +137,81 @@ public class AVL {
                 return;
             }else {
                 AVL al = new AVL(root.left);
-                int max = al.max();
-                if(number > max){
+                al.insert(number);
+                while(root.balance() > 1){
                     AVL ar = new AVL(root.right);
                     ar.insert(root.item);
-                    root.item = number;
-                    return;
+                    int max = al.max();
+                    root.item = max;
+                    al.delete(max);
                 }
-                al.delete(max);
-                al.insert(number);
-                AVL ar = new AVL(root.right);
-                ar.insert(root.item);
-                root.item = max;
-                return;
             }
         }
     }
     void delete(int number){
-        
+        if(root == null){
+            return;
+        }
+        if(root.height() == 0){
+            if(root.item == number){
+                root = null;
+                return;
+            }
+        }
+        if(root.balance() == 0){
+            if(root.item == number){
+                AVL ar = new AVL(root.right);
+                int min = ar.min();
+                root.item = min;
+                ar.delete(min);
+            }else if(number > root.item){
+                AVL ar = new AVL(root.right);
+                ar.delete(number);
+            } else{
+                AVL al = new AVL(root.left);
+                al.delete(number);
+            }
+        }else if(root.balance() == 1){
+            if(root.item == number){
+                AVL al = new AVL(root.left);
+                int max = al.max();
+                root.item = max;
+                al.delete(max);
+            }else if(number < root.item){
+                AVL al = new AVL(root.left);
+                al.delete(number);
+            } else{
+                AVL ar = new AVL(root.right);
+                ar.delete(number);
+                while(root.balance() > 1){
+                    ar.insert(root.item);
+                    AVL al = new AVL(root.left);
+                    int max = al.max();
+                    root.item = max;
+                    al.delete(max);
+                }
+            }
+        }else{
+            if(root.item == number){
+                AVL ar = new AVL(root.right);
+                int min = ar.min();
+                root.item = min;
+                ar.delete(min);
+            }else if(number > root.item){
+                AVL ar = new AVL(root.right);
+                ar.delete(number);
+            } else{
+                AVL al = new AVL(root.left);
+                al.delete(number);
+                while(root.balance() < -1){
+                    al.insert(root.item);
+                    AVL ar = new AVL(root.right);
+                    int min = ar.min();
+                    root.item = min;
+                    ar.delete(min);
+                }
+            }
+        }
     }
     int max(){
         Node temp = root;
