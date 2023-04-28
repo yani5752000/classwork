@@ -160,55 +160,106 @@ public class AVL {
         }
         if(root.balance() == 0){
             if(root.item == number){
+                if(root.right.height() == 0){
+                    root.item = root.right.item;
+                    root.right = null;
+                    return;
+                }
                 AVL ar = new AVL(root.right);
                 int min = ar.min();
                 root.item = min;
                 ar.delete(min);
             }else if(number > root.item){
+                if(root.right.height() == 0 && root.right.item == number){
+                    root.right = null;
+                    return;
+                }
                 AVL ar = new AVL(root.right);
                 ar.delete(number);
             } else{
+                if(root.left.height() == 0 && root.left.item == number){
+                    root.left = null;
+                    return;
+                }
                 AVL al = new AVL(root.left);
                 al.delete(number);
             }
         }else if(root.balance() == 1){
             if(root.item == number){
+                if(root.left.height() == 0){
+                    root.item = root.left.item;
+                    root.left = null;
+                    return;
+                }
                 AVL al = new AVL(root.left);
                 int max = al.max();
                 root.item = max;
                 al.delete(max);
             }else if(number < root.item){
+                if(root.left.height() == 0 && root.left.item == number){
+                    root.left = null;
+                    return;
+                }
                 AVL al = new AVL(root.left);
                 al.delete(number);
             } else{
-                AVL ar = new AVL(root.right);
-                ar.delete(number);
-                while(root.balance() > 1){
+                if(root.right.height() == 0 && root.right.item == number){
+                    AVL ar = new AVL(root.right);
                     ar.insert(root.item);
+                    ar.delete(number);
                     AVL al = new AVL(root.left);
                     int max = al.max();
                     root.item = max;
                     al.delete(max);
+                } else{
+                    AVL ar = new AVL(root.right);
+                    ar.delete(number);
+                    while(root.balance() > 1){
+                        ar.insert(root.item);
+                        AVL al = new AVL(root.left);
+                        int max = al.max();
+                        root.item = max;
+                        al.delete(max);
+                    }
                 }
             }
-        }else{
+        }else{//if root.balance() == -1
             if(root.item == number){
+                if(root.right.height() == 0){
+                    root.item = root.right.item;
+                    root.right = null;
+                    return;
+                }
                 AVL ar = new AVL(root.right);
                 int min = ar.min();
                 root.item = min;
                 ar.delete(min);
             }else if(number > root.item){
+                if(root.right.height() == 0 && root.right.item == number){
+                    root.right = null;
+                    return;
+                }
                 AVL ar = new AVL(root.right);
                 ar.delete(number);
-            } else{
-                AVL al = new AVL(root.left);
-                al.delete(number);
-                while(root.balance() < -1){
+            } else{//number < root.item
+                if(root.left.height() == 0 && root.left.item == number){
+                    AVL al = new AVL(root.left);
                     al.insert(root.item);
+                    al.delete(number);
                     AVL ar = new AVL(root.right);
-                    int min = ar.min();
+                    int min = al.min();
                     root.item = min;
                     ar.delete(min);
+                } else{
+                    AVL al = new AVL(root.left);
+                    al.delete(number);
+                    while(root.balance() < -1){
+                        al.insert(root.item);
+                        AVL ar = new AVL(root.right);
+                        int min = ar.min();
+                        root.item = min;
+                        ar.delete(min);
+                    }
                 }
             }
         }
