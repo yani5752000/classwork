@@ -354,6 +354,13 @@ public class AVL {
         System.out.println("New Insert: " + 1);
         a.insert(1);
         a.preOrder();
-        
+        System.out.println("--------------------------------------------");
+        System.out.println("New delete: " + 27);
+        a.delete(27);
+        a.preOrder();
+        System.out.println("--------------------------------------------");
+        System.out.println("New delete: " + 11);
+        a.delete(11);
+        a.preOrder();
     }
 }
