@@ -14,19 +14,37 @@ import java.util.ArrayList;
 public class BTree {
     //int order;
     Node root;
+    public BTree(Node root){
+        this.root = root;
+    }
     
     Node search(int number){
+        if(root == null){
+            return null;
+        }
         System.out.println("searching the B tree for " + number);
         System.out.println("seraching in the Keys of node for " + number);
         if(root.searchKeys(0, root.keys.size() - 1, number) == true){
             System.out.println("found the node");
             System.out.println("root.leaf = " + root.leaf);
-            return root;
-        }else if(!root.leaf){
+            System.out.println("the currsent node is the node with keys ");
+            for(Integer key : root.keys){
+                System.out.print(key + " ");
+            }
+            System.out.println("");
+            System.out.println("currentnode == null is " + (root == null));
+            System.out.println("returning root ");
+            for(Integer key : root.keys){
+                System.out.print(key + " ");
+            }
+            System.out.println("");
+            return this.root;
+        }
+        
+        if(root.children.size() > 0){
             System.out.println("searching the leaves");
             for(Node node : root.children){
-                BTree bt = new BTree();
-                bt.root = node;
+                BTree bt = new BTree(node);
                 bt.search(number);
             }
         }
@@ -35,8 +53,6 @@ public class BTree {
     public static void main(String[] args) {
         Node node = new Node();
         node.leaf = false;
-        node .keys = new ArrayList<Integer>();
-        node.children = new ArrayList<Node>();
         node.keys.add(3);
         node.keys.add(5);
         node.keys.add(8);
@@ -47,8 +63,7 @@ public class BTree {
         node1.keys.add(4);
         node1.keys.add(7);
         node.children.add(node1);
-        BTree bt = new BTree();
-        bt.root = node;
+        BTree bt = new BTree(node);
         System.out.println("----------------------------------------");
         Node answer = bt.search(5);
         if(answer == null){
@@ -62,6 +77,8 @@ public class BTree {
         }
         System.out.println("----------------------------------------");
         Node answer1 = bt.search(7);
+        System.out.println("hi 7!!!!!!!");
+        System.out.println("answer1 == null is " + (bt.search(7) == null));
         if(answer1 == null){
             System.out.println("answer is null.");
         }else {

@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Node {
     boolean leaf;
-    ArrayList<Integer> keys;
-    ArrayList<Node> children;
+    ArrayList<Integer> keys = new ArrayList<Integer>();
+    ArrayList<Node> children = new ArrayList<Node>();
     boolean searchKeys(int l, int r, int number){
         if(r > l){
             int mid = 1 + (r - l) / 2;
