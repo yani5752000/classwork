@@ -27,25 +27,21 @@ public class BTree {
         if(root.searchKeys(0, root.keys.size() - 1, number) == true){
             System.out.println("found the node");
             System.out.println("root.leaf = " + root.leaf);
-            System.out.println("the currsent node is the node with keys ");
+            System.out.println("the resulted node is the node with keys ");
             for(Integer key : root.keys){
                 System.out.print(key + " ");
             }
-            System.out.println("");
-            System.out.println("currentnode == null is " + (root == null));
-            System.out.println("returning root ");
-            for(Integer key : root.keys){
-                System.out.print(key + " ");
-            }
-            System.out.println("");
-            return this.root;
+            return root;
         }
         
         if(root.children.size() > 0){
             System.out.println("searching the leaves");
             for(Node node : root.children){
                 BTree bt = new BTree(node);
-                bt.search(number);
+                Node node1 = bt.search(number);
+                if(node != null){
+                    return node1;
+                }
             }
         }
         return null;
@@ -77,8 +73,6 @@ public class BTree {
         }
         System.out.println("----------------------------------------");
         Node answer1 = bt.search(7);
-        System.out.println("hi 7!!!!!!!");
-        System.out.println("answer1 == null is " + (bt.search(7) == null));
         if(answer1 == null){
             System.out.println("answer is null.");
         }else {
