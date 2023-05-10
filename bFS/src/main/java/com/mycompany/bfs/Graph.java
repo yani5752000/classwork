@@ -24,6 +24,7 @@ public class Graph {
 
   // Add edges to the graph
   void addEdge(int v, int w) {
+      //we add in both ditrections
     if(!adj[v].contains(w)){
         adj[v].add(w);
     }
