@@ -32,7 +32,7 @@ public class Graph {
         adj[w].add(v);
     }
   }
-
+  //breadth-first search
   void BFS(int s) {
 
     boolean visited [] = new boolean[V];
