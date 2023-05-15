@@ -35,7 +35,7 @@ public class Graph {
   }
   //breadth-first search
   void BFS(int s) {
-
+    //"list" of visiteds and non-visiteds
     boolean visited [] = new boolean[V];
 
     LinkedList<Integer> queue = new LinkedList ();
