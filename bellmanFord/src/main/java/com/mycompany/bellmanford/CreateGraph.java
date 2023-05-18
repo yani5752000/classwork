@@ -40,6 +40,7 @@ class CreateGraph {
       dist[i] = Integer.MAX_VALUE;
 
     // Mark the source vertex
+    //make its distance from itself 0
     dist[s] = 0;
 
     // Step 2: relax edges |V| - 1 times
