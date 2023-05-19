@@ -30,7 +30,7 @@ class CreateGraph {
     for (int i = 0; i < e; ++i)
       edge[i] = new CreateEdge();
   }
-
+  //the Bellman-Ford algorithm
   void BellmanFord(CreateGraph graph, int s) {
     int V = graph.V, E = graph.E;
     int dist[] = new int[V];
