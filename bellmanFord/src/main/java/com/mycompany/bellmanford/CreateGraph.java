@@ -69,6 +69,7 @@ class CreateGraph {
     }
 
     // No negative w cycle found!
+    //if there is no negative cycle, then the algorithm will be valid
     // Print the distance and predecessor array
     printSolution(dist, V);
   }
