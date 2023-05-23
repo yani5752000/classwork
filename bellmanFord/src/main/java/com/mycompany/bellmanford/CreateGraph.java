@@ -112,6 +112,7 @@ class CreateGraph {
     graph.edge[4].d = 2;
     graph.edge[4].w = 2;
 
+    //run the algorithm on the graph
     graph.BellmanFord(graph, 0); // 0 is the source vertex
   }
 }
