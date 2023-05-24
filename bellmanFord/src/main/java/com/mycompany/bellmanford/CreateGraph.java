@@ -11,6 +11,7 @@ package com.mycompany.bellmanford;
  */
 class CreateGraph {
   // CreateGraph - it consists of edges
+  //inner class for creating edges
   class CreateEdge {
     int s, d, w;
 
