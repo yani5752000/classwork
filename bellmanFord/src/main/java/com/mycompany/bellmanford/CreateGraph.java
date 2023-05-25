@@ -13,6 +13,7 @@ class CreateGraph {
   // CreateGraph - it consists of edges
   //inner class for creating edges
   class CreateEdge {
+    //start, destination, and weight
     int s, d, w;
 
     CreateEdge() {
