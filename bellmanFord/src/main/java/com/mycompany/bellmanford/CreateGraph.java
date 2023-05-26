@@ -15,7 +15,7 @@ class CreateGraph {
   class CreateEdge {
     //start, destination, and weight
     int s, d, w;
-
+    //start, destination, and weight with 0 default values
     CreateEdge() {
       s = d = w = 0;
     }
